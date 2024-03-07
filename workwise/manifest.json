@@ -7,5 +7,14 @@
     "16": "img/cat.png",
     "48": "img/cat.png",
     "128": "img/cat.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "img/cat.png",
+      "24": "img/cat.png",
+      "32": "img/cat.png"
+    },
+    "default_title": "WorkWise",
+    "default_popup": "popup.html"
   }
 }

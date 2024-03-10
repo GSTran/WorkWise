@@ -1,8 +1,21 @@
-body {
-  width: 400px;
-  height: 400px;
+* {
+  margin: 0px;
+  padding: 0px;
 }
 
-h1 {
-  color: blue;
+body {
+  width: 500px;
+  height: 800px;
+}
+
+.container {
+  margin: 20px 15px;
+}
+
+.quote-button {
+  margin-top: 20px;
+  width: 100px;
+  height: 30px;
+
+  font-size: 12px;
 }

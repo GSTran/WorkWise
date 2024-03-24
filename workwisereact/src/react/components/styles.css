@@ -1,0 +1,22 @@
+* {
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  body {
+    width: 500px;
+    height: 800px;
+  }
+  
+  .container {
+    margin: 20px 15px;
+  }
+  
+  .quote-button {
+    margin-top: 20px;
+    width: 100px;
+    height: 30px;
+  
+    font-size: 12px;
+  }
+  

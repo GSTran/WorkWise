@@ -8,6 +8,7 @@
     "48": "img/cat.png",
     "128": "img/cat.png"
   },
+  "host_permissions": ["https://zenquotes.io/api/"],
   "action": {
     "default_icon": {
       "16": "img/cat.png",

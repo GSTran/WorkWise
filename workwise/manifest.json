@@ -3,6 +3,7 @@
   "name": "WorkWise",
   "version": "1.0.0",
   "description": "Productivity Extension",
+  "permissions": ["tabs"],
   "icons": {
     "16": "img/cat.png",
     "48": "img/cat.png",

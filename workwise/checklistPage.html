@@ -4,6 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checklist Page</title>
+    <link rel="stylesheet" href="checklistPage.css"
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <h2>Checklist</h2>
+      <div class="checklist">
+        <div class="row">
+          <input type="text" id="input-box" placeholder="Create new task">
+          <!-- The Button on click call the function addTask() from js -->
+          <button onclick="addTask()">Add Task</button> 
+        </div>
+
+        <ul id="list-container">
+          
+        </ul>
+      </div>
+    </div>
+    <script src="checklistPage.js"></script>
+  </body>
 </html>

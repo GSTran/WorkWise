@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f7f7f7, #616161);
+  padding: 10px;
+}
+
+#list-container {
+  margin-left: 15px;
+}
+

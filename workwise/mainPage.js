@@ -28,7 +28,7 @@ const timer = {
 };
 let interval;
 
-const buttonSound = new Audio('button-sound.mp3');
+const buttonSound = new Audio('./PomodoroTimer/button-sound.mp3');
 const mainButton = document.getElementById('js-btn');
 mainButton.addEventListener('click', () => {
   buttonSound.play();

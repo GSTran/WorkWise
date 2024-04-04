@@ -82,14 +82,95 @@ function displayTime(timeData) {
   var websiteList = document.getElementById('websiteList');
   websiteList.innerHTML = '';
 
-  console.log("timeData");
-  console.log(timeData );
+  // Create arrays to hold website URLs and times
+  var urls = [];
+  var times = [];
+
+  // Iterate through each website in timeData and display it
   Object.keys(timeData).forEach(function(url) {
     var listItem = document.createElement('li');
     listItem.textContent = url + ': ' + formatTime(timeData[url]);
     websiteList.appendChild(listItem);
+
+    // Push URL and time to respective arrays
+    urls.push(url);
+    times.push(timeData[url]);
+  });
+
+  // Update pie chart
+  updatePieChart(urls, times);
+}
+
+// Function to update the pie chart
+function updatePieChart(labels, data) {
+  // Get the canvas element
+  var ctx = document.getElementById('pieChart').getContext('2d');
+
+  // If the chart already exists, destroy it
+  if (window.myPieChart) {
+    window.myPieChart.destroy();
+  }
+
+  // Create a new pie chart
+  window.myPieChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Time Spent',
+        data: data,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.6)',
+          'rgba(54, 162, 235, 0.6)',
+          'rgba(255, 206, 86, 0.6)',
+          'rgba(75, 192, 192, 0.6)',
+          'rgba(153, 102, 255, 0.6)',
+          'rgba(255, 159, 64, 0.6)',
+          'rgba(231,233,237,0.6)',
+          'rgba(254,97,132,0.6)',
+          'rgba(54,162,235,0.6)',
+          'rgba(0,255,65,0.6)',
+          'rgba(255,206,86,0.6)',
+          'rgba(75,192,192,0.6)',
+          'rgba(153,102,255,0.6)',
+          'rgba(255,159,64,0.6)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(231,233,237,1)',
+          'rgba(254,97,132,1)',
+          'rgba(54,162,235,1)',
+          'rgba(0,255,65,1)',
+          'rgba(255,206,86,1)',
+          'rgba(75,192,192,1)',
+          'rgba(153,102,255,1)',
+          'rgba(255,159,64,1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      title: {
+        display: true,
+        text: 'Time Spent on Websites'
+      }
+    }
   });
 }
+
+// Helper function to format time
+function formatTime(time) {
+  // Your formatting logic here
+  return time;
+}
+
 
 // Format time in HH:MM:SS format
 function formatTime(milliseconds) {

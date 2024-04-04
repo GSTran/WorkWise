@@ -39,33 +39,6 @@ function extractDomain(url) {
   domain = domain.split(':')[0];
   return domain;
 }
-// // Listen for window focus change
-// chrome.windows.onFocusChanged.addListener(function(windowId) {
-//   if (trackingEnabled) {
-//     if (windowId === chrome.windows.WINDOW_ID_NONE) {
-//       // When window loses focus, calculate and update the time for the active tab
-//       chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-//         var currentTab = tabs[0];
-//         var url = currentTab.url;
-//         var currentTime = new Date().getTime();
-        
-//         if (startTimeMap[url]) {
-//           var startTime = startTimeMap[url];
-//           var elapsedTime = currentTime - startTime;
-//           trackTimeOnWebsite(url, elapsedTime);
-//           delete startTimeMap[url];
-//         }
-//       });
-//     } else {
-//       // When window gains focus again, start tracking time for active tab
-//       chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-//         var currentTab = tabs[0];
-//         var url = currentTab.url;
-//         startTimeMap[url] = new Date().getTime();
-//       });
-//     }
-//   }
-// });
 
 //Function to track time spent on a website
 function trackTimeOnWebsite(url, elapsedTime) {
@@ -78,15 +51,12 @@ function trackTimeOnWebsite(url, elapsedTime) {
     newData[url] = totalTime + elapsedTime;
     chrome.storage.local.set(newData);
 
-    chrome.storage.local.get(null, function(data) {
-      // Send the time data back to the requesting script
-      chrome.runtime.sendMessage({ action: 'updateTime', timeData: data });
-    });
+    sendTimeData();
   });
 }
 
 // Listen for messages from popup or other content scripts
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(message, sender) {
   if (message.action === 'startTracking') {
     trackingEnabled = true;
   } else if (message.action === 'stopTracking') {
@@ -96,18 +66,17 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
   }
   else if (message.action === 'requestTime') {
     // Respond to the request with the time data
-    sendTimeData(sendResponse);
+    sendTimeData();
     return true; // Indicates that the response will be sent asynchronously
   }
 });
 
 // Function to send time data to the requesting script
-function sendTimeData(sendResponse) {
+function sendTimeData() {
   // Retrieve all time data from storage
   chrome.storage.local.get(null, function(data) {
     // Send the time data back to the requesting script
-    sendResponse({ action: 'updateTime', timeData: data });
-    console.log("Responded to requestTime message")
+    chrome.runtime.sendMessage({ action: 'updateTime', timeData: data,tracking:trackingEnabled });
   });
 }
 

@@ -15,3 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
     chrome.tabs.create({ url: "checklistPage.html" });
   });
 });
+
+var checklistPageButton = document.getElementById("websiteTrackingButton");
+
+checklistPageButton.addEventListener("click", function () {
+  // Open checklist page when the button is clicked
+  chrome.tabs.create({ url: "timeTrackingPage.html" });
+});

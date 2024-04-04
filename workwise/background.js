@@ -84,42 +84,6 @@ function trackTimeOnWebsite(url, elapsedTime) {
     });
   });
 }
-// function trackTimeOnWebsite(url, elapsedTime) {
-//   var key = 'websiteData';
-  
-//   // Retrieve stored time for all websites
-//   chrome.storage.local.get(key, function(data) {
-//     var websiteData = data || {};
-//     console.log("website Data before adding");
-//     console.log(websiteData);
-
-//     // Update the total time spent on this website
-//     websiteData[url] = (websiteData[url] || 0) + elapsedTime;
-//     websiteData["hello"] = "Sata Andagi"
-//     console.log("website Data after adding");
-//     console.log(websiteData);
-
-//     // Update the stored data with the updated website data
-//     chrome.storage.local.set({'websiteData':websiteData);
-
-//     printData();
-
-//     // Send the updated website data back to the requesting script
-//     chrome.runtime.sendMessage({ action: 'updateTime', timeData: websiteData });
-//   });
-// }
-
-// function printData(){
-//   chrome.storage.local.get('websiteData', function(data) {
-//     // Optional code to execute after setting data in local storage
-//     console.log("Data right afta");
-//     console.log(data);
-//   });
-// }
-
-
-//Function to send an updateTime message to the timeTrackingPage
-
 
 // Listen for messages from popup or other content scripts
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {

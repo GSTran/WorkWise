@@ -84,12 +84,6 @@ function displayTime(timeData) {
 
   console.log("timeData");
   console.log(timeData );
-  // chrome.storage.local.get('websiteData', function(data) {
-  //   // Optional code to execute after setting data in local storage
-  //   console.log("Data right afta");
-  //   console.log(data);
-  // });
-  // Iterate through each website in timeData and display it
   Object.keys(timeData).forEach(function(url) {
     var listItem = document.createElement('li');
     listItem.textContent = url + ': ' + formatTime(timeData[url]);

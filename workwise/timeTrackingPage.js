@@ -104,6 +104,10 @@ function displayTime(timeData, tracking) {
     times.push(timeData[url]);
   });
 
+  var listItem = document.createElement('li');
+  listItem.textContent = 'Total Time: ' + formatTime(totalTime);
+  websiteList.appendChild(listItem);
+
   if(!tracking){
     chrome.storage.local.clear();
   }

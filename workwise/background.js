@@ -67,7 +67,6 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
   else if (message.action === 'requestTime') {
     // Respond to the request with the time data
     sendTimeData();
-    return true; // Indicates that the response will be sent asynchronously
   }
 });
 

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   mainPageButton.addEventListener("click", function () {
     // Open main page when the button is clicked
-    chrome.tabs.create({ url: "mainPage.html" });
+    chrome.tabs.create({ url: "../mainPage/mainPage.html" });
   });
 });
 
@@ -12,6 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   checklistPageButton.addEventListener("click", function () {
     // Open checklist page when the button is clicked
-    chrome.tabs.create({ url: "checklistPage.html" });
+    chrome.tabs.create({ url: "../checklistPage/checklistPage.html" });
   });
 });

@@ -23,6 +23,6 @@
       "32": "img/cat.png"
     },
     "default_title": "WorkWise",
-    "default_popup": "popup.html"
+    "default_popup": "./popup/popup.html"
   }
 }

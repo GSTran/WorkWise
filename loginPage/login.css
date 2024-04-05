@@ -1,0 +1,71 @@
+body {
+  background-color: orange;
+}
+
+.login-box {
+  margin-top: 200px;
+  width: 360px;
+  height: 280px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  border-radius: 3px;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 15px;
+}
+
+h4 {
+  text-align: center;
+}
+
+form {
+  width: 300px;
+  margin-left: 20px;
+}
+
+form label {
+  display: flex;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+form input {
+  width: 100%;
+  padding: 7px;
+  border: none;
+  border: 1px solid gray;
+  border-radius: 6px;
+  outline: none;
+}
+
+input[type="button"] {
+  width: 320px;
+  height: 35px;
+  margin-top: 20px;
+  border: none;
+  background-color: #1f1f1f;
+  color: white;
+  font-size: 18px;
+}
+
+p {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 15px;
+}
+
+.para-2 {
+  text-align: center;
+  color: #1f1f1f;
+  font-size: 15px;
+  margin-top: -10px;
+  font-weight: bold;
+}
+
+.para-2 a {
+  color: rgb(0, 4, 255);
+  font-weight: bold;
+}

@@ -4,9 +4,12 @@
   "version": "1.0.0",
   "description": "Productivity Extension",
   "permissions": [
-    "tabs",
-    "storage"
+    "storage",
+    "tabs"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "icons": {
     "16": "img/cat.png",
     "48": "img/cat.png",

@@ -2,6 +2,13 @@ const inputBox = document.getElementById("input-box");
 const listContainer = document.getElementById("list-container");
 const addTaskBtn = document.getElementById("add-task-btn");
 
+let hrs = document.getElementById("hrs");
+let min = document.getElementById("min");
+let sec = document.getElementById("sec");
+
+let currentTime = new Date();
+console.log(currentTime.getHours());
+
 function addTask() {
   // Check if the input box is empty
   if (inputBox.value === "") {

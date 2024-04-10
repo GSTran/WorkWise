@@ -16,11 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
     chrome.tabs.create({ url: "../checklistPage/checklistPage.html" });
   });
 
-  createAccountPageButton.addEventListener("click", function () {
-    // Open create account page when the button is clicked
-    chrome.tabs.create({ url: "../signupPage/signup.html" });
-  });
-
   websiteTrackingButton.addEventListener("click", function () {
     // Open time tracking page when the button is clicked
     chrome.tabs.create({ url: "../timeTrackingPage/timeTrackingPage.html" });

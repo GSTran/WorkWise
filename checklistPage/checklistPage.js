@@ -14,6 +14,10 @@ let sec = document.getElementById("sec");
 
 let currentTime = new Date();
 console.log(currentTime.getHours());
+console.log(currentTime.getMinutes);
+console.log(currentTime.getSeconds);
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function addTask() {
   // Check if the input box is empty
@@ -112,6 +116,8 @@ function updateCompletedTaskCounter() {
   }
 }
 
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 // Function to load the task counts from localStorage
 function loadTaskCounts() {
   const savedTotalTasks = localStorage.getItem("totalTasks");
@@ -126,3 +132,33 @@ function loadTaskCounts() {
 
 // Call the function to load the task counts when the page loads
 loadTaskCounts();
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Function to reset everything when it's past midnight
+function resetAtMidnight() {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+
+  // Check if it's past midnight (12:00 AM)
+  if (hours === 0 && minutes === 0 && seconds === 0) {
+    // Reset counters
+    totalTasks = 0;
+    completedTasks = 0;
+    updateTaskCounter();
+    updateCompletedTaskCounter();
+
+    // Clear task list
+    listContainer.innerHTML = "";
+
+    // Clear localStorage
+    localStorage.removeItem("data");
+    localStorage.removeItem("totalTasks");
+    localStorage.removeItem("completedTasks");
+  }
+}
+
+// Call resetAtMidnight function every second
+setInterval(resetAtMidnight, 1000);

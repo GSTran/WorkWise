@@ -173,8 +173,6 @@ const completionMessage = document.getElementById("completion-message");
 let totalTasks = 0;
 let completedTasks = 0;
 
-//---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 function addTask() {
   if (inputBox.value === "") {
     alert("Goober write something!");
@@ -188,6 +186,9 @@ function addTask() {
 
     totalTasks++;
     updateTaskCounter();
+
+    // Check completion status after adding a task
+    recheckCompletionStatus();
   }
   inputBox.value = "";
   saveData();
@@ -207,6 +208,7 @@ listContainer.addEventListener(
       }
       saveData();
       updateCompletedTaskCounter();
+      recheckCompletionStatus(); // Check completion status after modifying a task
     } else if (e.target.tagName === "SPAN") {
       e.target.parentElement.remove();
       totalTasks--;
@@ -215,6 +217,7 @@ listContainer.addEventListener(
       }
       updateTaskCounter();
       updateCompletedTaskCounter();
+      recheckCompletionStatus(); // Check completion status after modifying a task
       saveData();
     }
   },
@@ -222,11 +225,11 @@ listContainer.addEventListener(
 );
 
 function saveData() {
-  chrome.storage.local.set({ data: listContainer.innerHTML });
+  chrome.storage.sync.set({ data: listContainer.innerHTML });
 }
 
 function showTask() {
-  chrome.storage.local.get("data", function (result) {
+  chrome.storage.sync.get("data", function (result) {
     listContainer.innerHTML = result.data || "";
   });
 }
@@ -238,7 +241,7 @@ function updateTaskCounter() {
     totalTasks = 0;
   }
   taskCounter.textContent = totalTasks;
-  chrome.storage.local.set({ totalTasks: totalTasks });
+  chrome.storage.sync.set({ totalTasks: totalTasks });
 }
 
 function updateCompletedTaskCounter() {
@@ -246,19 +249,19 @@ function updateCompletedTaskCounter() {
     completedTasks = 0;
   }
   completedTaskCounter.textContent = completedTasks;
-  chrome.storage.local.set({ completedTasks: completedTasks }, function () {
-    if (completedTasks === totalTasks && totalTasks > 0) {
-      completionMessage.textContent = "Hooray! All tasks completed!";
-    } else {
-      completionMessage.textContent = "";
-    }
-  });
+  chrome.storage.sync.set({ completedTasks: completedTasks });
 }
 
-//---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function recheckCompletionStatus() {
+  if (completedTasks === totalTasks && totalTasks > 0) {
+    completionMessage.textContent = "Hooray! All tasks completed!";
+  } else {
+    completionMessage.textContent = "";
+  }
+}
 
 function loadTaskCounts() {
-  chrome.storage.local.get(["totalTasks", "completedTasks"], function (result) {
+  chrome.storage.sync.get(["totalTasks", "completedTasks"], function (result) {
     const savedTotalTasks = result.totalTasks;
     const savedCompletedTasks = result.completedTasks;
 
@@ -278,8 +281,6 @@ function loadTaskCounts() {
 
 loadTaskCounts();
 
-//---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 function resetAtMidnight() {
   const now = new Date();
   const hours = now.getHours();
@@ -294,7 +295,7 @@ function resetAtMidnight() {
 
     listContainer.innerHTML = "";
 
-    chrome.storage.local.remove(["data", "totalTasks", "completedTasks"]);
+    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
   }
 }
 

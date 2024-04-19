@@ -111,11 +111,9 @@ chrome.runtime.onMessage.addListener(function(message) {
     stopTimer();
   }
   else if (action === 'pomOpen'){
-    //console.log("Pom Open");
     pomIsOpen=true;
   }
   else if(action === 'pomClose'){
-    //console.log("Pom Closed");
     pomIsOpen=false;
   }
   else if (action ==='buttonStatus'){
@@ -156,7 +154,6 @@ chrome.windows.onRemoved.addListener((windowId) => {
 
       if (closedWindow && closedWindow.type === 'popup') {  
         pomisOpen = false; 
-        //console.log("Window Closed");
       }
   });
 });
@@ -186,7 +183,7 @@ async function createOffscreen() {
   await chrome.offscreen.createDocument({
       url: './pomodoro/pomodoroOffscreen.html',
       reasons: ['AUDIO_PLAYBACK'],
-      justification: 'testing' // details for using the API
+      justification: 'playing audio'
   });
   console.log("offscreen doc created");
 }
@@ -210,8 +207,6 @@ function startTimer() {
   const endTime = Date.parse(new Date()) + total * 1000;
 
   if (timer.mode === 'pomodoro') timer.sessions++;
-
-  //chrome.runtime.sendMessage({action: 'mainButtonOn'});
 
   interval = setInterval(async function() {
   timer.remainingTime = getRemainingTime(endTime);

@@ -40,20 +40,63 @@ function extractDomain(url) {
   return domain;
 }
 
-//Function to track time spent on a website
+// //Function to track time spent on a website
+// function trackTimeOnWebsite(url, elapsedTime) {
+//   // Retrieve stored time for this website
+//   chrome.storage.local.get(url, function(data) {
+//     var totalTime = data[url] || 0;
+
+//     // Update the total time spent on this website
+//     var newData = {};
+//     newData[url] = totalTime + elapsedTime;
+//     chrome.storage.local.set(newData);
+
+//     sendTimeData();
+//   });
+// }
+
 function trackTimeOnWebsite(url, elapsedTime) {
-  // Retrieve stored time for this website
-  chrome.storage.local.get(url, function(data) {
-    var totalTime = data[url] || 0;
+  var key = 'websiteData';
+  
+  // Retrieve stored time for all websites
+  chrome.storage.local.get(key, function(data) {
+    var websiteDataArray = data[key] || [];
+    console.log("data:");
+    console.log(data);
 
-    // Update the total time spent on this website
+    // Find the website data in the array or create a new entry if it doesn't exist
+    var websiteIndex = websiteDataArray.findIndex(function(website) {
+      return website.url === url;
+    });
+
+    if (websiteIndex === -1) {
+      // If the website is not found in the array, create a new entry
+      websiteDataArray.push({ url: url, time: elapsedTime });
+    } else {
+      // If the website is found in the array, update its time
+      websiteDataArray[websiteIndex].time += elapsedTime;
+    }
+
+    // Update the stored data with the updated website data array
     var newData = {};
-    newData[url] = totalTime + elapsedTime;
-    chrome.storage.local.set(newData);
+    newData[key] = websiteDataArray;
+    chrome.storage.local.set(newData, function() {
+      // Optional code to execute after setting data in local storage
+      // console.log("Data right after setting:");
+      // console.log(websiteDataArray);
+    });
+    chrome.storage.local.get(newData, function(data){
+      //console.log(data);
+    });
+    //chrome.storage.local.get(console.log);
 
+
+    // Send the updated website data back to the requesting script
     sendTimeData();
+    //chrome.runtime.sendMessage({ action: 'updateTime', timeData: websiteDataArray });
   });
 }
+
 
 // Listen for messages from popup for website tracking
 chrome.runtime.onMessage.addListener(function(message, sender) {
@@ -77,9 +120,9 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
 // Function to send time data to the requesting script
 function sendTimeData() {
   // Retrieve all time data from storage
-  chrome.storage.local.get(null, function(data) {
+  chrome.storage.local.get('websiteData', function(data) {
     // Send the time data back to the requesting script
-    chrome.runtime.sendMessage({ action: 'updateTime', timeData: data,tracking:trackingEnabled });
+    chrome.runtime.sendMessage({ action: 'updateTime', timeData:data,tracking:trackingEnabled });
   });
 }
 
@@ -173,7 +216,7 @@ function updateTimerInStorage(newTimer) {
  */
 async function playSound(source) {
   await createOffscreen();
-  console.log(chrome.offscreen.hasDocument());
+  //console.log(chrome.offscreen.hasDocument());
   await chrome.runtime.sendMessage({ action: 'play', mode: source});
 }
 
@@ -185,7 +228,7 @@ async function createOffscreen() {
       reasons: ['AUDIO_PLAYBACK'],
       justification: 'playing audio'
   });
-  console.log("offscreen doc created");
+  //console.log("offscreen doc created");
 }
 
 async function switchMode(mode){
@@ -201,7 +244,7 @@ async function switchMode(mode){
 };
 
 function startTimer() {
-  console.log("Sound request sent");
+  //console.log("Sound request sent");
   timerRunning=true;
   let { total } = timer.remainingTime;
   const endTime = Date.parse(new Date()) + total * 1000;
@@ -216,7 +259,7 @@ function startTimer() {
    } 
      
      total = timer.remainingTime.total;
-     console.log("Total: " + total + pomIsOpen);
+     //console.log("Total: " + total + pomIsOpen);
      if (total <= 0) {
        clearInterval(interval);
       

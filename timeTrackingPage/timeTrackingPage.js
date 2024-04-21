@@ -10,7 +10,7 @@ function requestTimeFromBackground() {
 
 // Display time spent on each website
 document.addEventListener('DOMContentLoaded', function() {
-  requestTimeFromBackground();
+  //requestTimeFromBackground();
 
   var saveButton = document.getElementById('saveButton');
   var loadButton = document.getElementById('loadButton');
@@ -33,12 +33,18 @@ document.addEventListener('DOMContentLoaded', function() {
     chrome.storage.local.get(null, function(data) {
     console.log('Local Storage Data:', data);
   });
+  chrome.storage.local.get('blacklist', function(data){
+    console.log('Blacklist:',data);
+    console.log('Blacklist:',data.blacklist);
+  }); 
     
   });
 
   // Save data to local storage when save button is clicked
   saveButton.addEventListener('click', function() {
     var data = { message: 'Hello, world!' };
+    var blacklist = ["www.youtube.com","www.reddit.com","sjsu.instructure.com"];
+    chrome.storage.local.set({'blacklist':blacklist});
     chrome.storage.local.set({ 'myData': data }, function() {
       console.log('Data saved:', data);
     });
@@ -78,8 +84,20 @@ chrome.runtime.onMessage.addListener(function(message) {
   }
 });
 
+function getBlacklist() {
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.get('blacklist', function(data) {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError);
+      } else {
+        resolve(data.blacklist);
+      }
+    });
+  });
+}
+
 // Display time spent on each website
-function displayTime(timeData, tracking) {
+async function displayTime(timeData, tracking) {
   var websiteList = document.getElementById('websiteList');
   websiteList.innerHTML = '';
 
@@ -87,25 +105,55 @@ function displayTime(timeData, tracking) {
   var urls = [];
   var times = [];
   var totalTime = 0;
-  Object.keys(timeData).forEach(function(url){
-    totalTime += timeData[url];
+  var timeOffTask = 0;
+  var blacklist;
+
+  try {
+    // Wait for the storage query to complete using async/await
+    blacklist = await getBlacklist();
+    console.log('Blacklist:', blacklist);
+
+    // Further processing using blacklist
+    console.log(timeData);
+    console.log(timeData.websiteData);
+  } catch (error) {
+    console.error('Error retrieving blacklist:', error);
+  }
+
+  var websiteData = timeData.websiteData;
+  
+  // Calculate total time spent on all websites
+  websiteData.forEach(function(website) {
+    totalTime += website.time;
+    if (blacklist){
+      blacklist.forEach(function(blackListedWebsite){
+        if (blackListedWebsite == website.url){
+          timeOffTask += website.time;
+          return;
+        }
+      })
+    }
   });
+
   // Iterate through each website in timeData and display it
-  Object.keys(timeData).forEach(function(url) {
+  websiteData.forEach(function(website) {
     var listItem = document.createElement('li');
-    listItem.textContent = url + ': ' + formatTime(timeData[url]);
-    if (!tracking){
-      listItem.textContent += " Portion: " + ((timeData[url] / totalTime) * 100).toFixed(2) + "%";
+    listItem.textContent = website.url + ': ' + formatTime(website.time);
+    if (!tracking) {
+      listItem.textContent += " Portion: " + ((website.time / totalTime) * 100).toFixed(2) + "%";
     }
     websiteList.appendChild(listItem);
 
     // Push URL and time to respective arrays
-    urls.push(url);
-    times.push(timeData[url]);
+    urls.push(website.url);
+    times.push(website.time);
   });
 
   var listItem = document.createElement('li');
   listItem.textContent = 'Total Time: ' + formatTime(totalTime);
+  websiteList.appendChild(listItem);
+  var listItem = document.createElement('li');
+  listItem.textContent = 'Time off Task: ' + (timeOffTask/totalTime*100).toFixed(2) + "%";
   websiteList.appendChild(listItem);
 
   if(!tracking){

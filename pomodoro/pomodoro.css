@@ -8,6 +8,19 @@
  * https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
  *
  */
+ * {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  width: 500px;
+  height: 800px;
+}
+
+.container {
+  margin: 20px 15px;
+}
 
 html {
   box-sizing: border-box;

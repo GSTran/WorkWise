@@ -5,7 +5,8 @@
   "description": "Productivity Extension",
   "permissions": [
     "storage",
-    "tabs"
+    "tabs",
+    "offscreen"
   ],
   "background": {
     "service_worker": "background.js"

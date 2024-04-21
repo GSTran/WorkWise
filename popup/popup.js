@@ -1,23 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var mainPageButton = document.getElementById("mainPageButton");
   var checklistPageButton = document.getElementById("checkListPageButton");
-  var createAccountPageButton = document.getElementById(
-    "createAccountPageButton"
-  );
-  var websiteTrackingButton = document.getElementById("websiteTrackingButton");
-
-  mainPageButton.addEventListener("click", function () {
-    // Open main page when the button is clicked
-    chrome.tabs.create({ url: "../mainPage/mainPage.html" });
-  });
 
   checklistPageButton.addEventListener("click", function () {
     // Open checklist page when the button is clicked
     chrome.tabs.create({ url: "../checklistPage/checklistPage.html" });
   });
 
+  var websiteTrackingButton = document.getElementById("websiteTrackingButton");
+
   websiteTrackingButton.addEventListener("click", function () {
-    // Open time tracking page when the button is clicked
+    // Open checklist page when the button is clicked
     chrome.tabs.create({ url: "../timeTrackingPage/timeTrackingPage.html" });
+
+    var pomodoroButton = document.getElementById("pomodoroButton");
+
+    pomodoroButton.addEventListener("click", function () {
+      chrome.runtime.sendMessage({ action: "pomOpen" });
+    });
   });
 });

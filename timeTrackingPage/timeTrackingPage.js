@@ -140,22 +140,39 @@ async function displayTime(timeData, tracking) {
     var listItem = document.createElement('li');
     listItem.textContent = website.url + ': ' + formatTime(website.time);
     if (!tracking) {
-      listItem.textContent += " Portion: " + ((website.time / totalTime) * 100).toFixed(2) + "%";
+        var proportion = (website.time / totalTime) * 100;
+        listItem.textContent += " Portion: " + proportion.toFixed(2) + "%";
+
+        // Creating a progress bar element
+        var progressBar = document.createElement('progress');
+        progressBar.value = proportion;
+        progressBar.max = 100;
+        listItem.appendChild(progressBar);
     }
     websiteList.appendChild(listItem);
 
     // Push URL and time to respective arrays
-    urls.push(website.url);
-    times.push(website.time);
+    // urls.push(website.url);
+    // times.push(website.time);
   });
-
+  //Total Time element
   var listItem = document.createElement('li');
   listItem.textContent = 'Total Time: ' + formatTime(totalTime);
   websiteList.appendChild(listItem);
+  
+  //Time Off Task element
   var listItem = document.createElement('li');
-  listItem.textContent = 'Time off Task: ' + (timeOffTask/totalTime*100).toFixed(2) + "%";
+  var propOffTask = timeOffTask/totalTime*100;
+  listItem.textContent = 'Time off Task: ' + propOffTask.toFixed(2) + "%";
+  if(!tracking){
+    var progressBar = document.createElement('progress');
+    progressBar.value = propOffTask;
+    progressBar.max = 100;
+    listItem.appendChild(progressBar);
+  }
   websiteList.appendChild(listItem);
 
+  //Clear when tracking stops
   if(!tracking){
     chrome.storage.local.clear();
   }

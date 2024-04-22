@@ -1,4 +1,4 @@
-const api_url = "https://zenquotes.io/api/random/";
+const api_url = "https://zenquotes.io/api/today/";
 
 async function getQuote() {
   try {

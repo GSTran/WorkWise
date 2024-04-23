@@ -188,6 +188,15 @@ chrome.runtime.onMessage.addListener(function(message) {
     timer.shortBreak = message.shortBreak;
     timer.longBreak = message.longBreak;
 
+    var longBreakInterval = message.longBreakInterval;
+    if(longBreakInterval<=0)
+    {
+      timer.longBreakInterval = 1;
+    }
+    else{
+      timer.longBreakInterval = longBreakInterval;
+    }
+
     var currentMode = timer.mode;
     switchMode(currentMode);
   }

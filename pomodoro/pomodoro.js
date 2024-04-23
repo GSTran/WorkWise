@@ -93,20 +93,28 @@ changeTimeButton.addEventListener('click', () => {
   var pomodoroInput = document.getElementById("pomodoroInput").value;
   var shortBreakInput = document.getElementById("shortBreakInput").value;
   var longBreakInput = document.getElementById("longBreakInput").value;
+  var longBreakIntervalInput = document.getElementById("longBreakInterval").value;
 
   // Parse input values
   var pomodoro = parseFloat(pomodoroInput);
   var shortBreak = parseFloat(shortBreakInput);
   var longBreak = parseFloat(longBreakInput);
+  var longBreakInterval = parseInt(longBreakIntervalInput);
 
   // Check if any parsed value is NaN
-  if (isNaN(pomodoro) || isNaN(shortBreak) || isNaN(longBreak)) {
+  if (isNaN(pomodoro) || isNaN(shortBreak) || isNaN(longBreak) || isNaN(longBreakInterval)) {
       alert("Please enter valid integer values for all inputs.");
   } else {
-    chrome.runtime.sendMessage({action:'updateTime', pomodoro, shortBreak,longBreak});
+    chrome.runtime.sendMessage({action:'updateTime', pomodoro, shortBreak,longBreak, longBreakInterval});
   }
   
 });
+
+const settingsButton = document.getElementById('settingsButton');
+settingsButton.addEventListener('click', () => {
+  var settingsMenu = document.getElementById("settingsMenu");
+  settingsMenu.classList.toggle("hidden");
+})
 
 const modeButtons = document.querySelector('#js-mode-buttons')
 modeButtons.addEventListener('click', handleMode);

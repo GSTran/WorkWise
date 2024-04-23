@@ -4,9 +4,11 @@ const addTaskBtn = document.getElementById("add-task-btn");
 const taskCounter = document.getElementById("task-counter");
 const completedTaskCounter = document.getElementById("completed-task-counter");
 const completionMessage = document.getElementById("completion-message");
+const streakCounter = document.getElementById("streak-counter");
 
 let totalTasks = 0;
 let completedTasks = 0;
+let streak = 0;
 
 function addTask() {
   if (inputBox.value === "") {
@@ -95,6 +97,16 @@ function recheckCompletionStatus() {
   }
 }
 
+function checkCompletionforStreak() {
+  if (completedTasks === totalTasks && totalTasks > 0) {
+    streak++; //if done with all increment streak;
+    updateStreakCounter();
+  } else {
+    streak = 0;
+    updateStreakCounter();
+  }
+}
+
 function loadTaskCounts() {
   chrome.storage.sync.get(["totalTasks", "completedTasks"], function (result) {
     const savedTotalTasks = result.totalTasks;
@@ -114,7 +126,21 @@ function loadTaskCounts() {
   });
 }
 
+function updateStreakCounter() {
+  streakCounter.textContent = streak; // I can reset streak here when testing
+  chrome.storage.sync.set({ streak: streak });
+}
+
+function loadStreakCount() {
+  chrome.storage.sync.get("streak", function (result) {
+    streak = result.streak !== null && result.streak !== undefined ? parseInt(result.streak) : 0;
+    updateStreakCounter();
+  });
+}
+
+
 loadTaskCounts();
+loadStreakCount();
 
 function resetAtMidnight() {
   const now = new Date();
@@ -123,7 +149,8 @@ function resetAtMidnight() {
   const seconds = now.getSeconds();
 
   // Check if it's midnight
-  if (hours === 17 && minutes === 31 && seconds === 14) {
+  if (hours === 17 && minutes === 57 && seconds === 14) {
+    checkCompletionforStreak()
     completionMessage.textContent = "";
     totalTasks = 0;
     completedTasks = 0;
@@ -136,7 +163,8 @@ function resetAtMidnight() {
   }
 
   // Check if it's midnight
-  if (hours === 17 && minutes === 31 && seconds === 34) {
+  if (hours === 17 && minutes === 57 && seconds === 34) {
+    checkCompletionforStreak()
     completionMessage.textContent = "";
     totalTasks = 0;
     completedTasks = 0;
@@ -149,7 +177,8 @@ function resetAtMidnight() {
   }
 
   // Check if it's midnight
-  if (hours === 17 && minutes === 31 && seconds === 54) {
+  if (hours === 17 && minutes === 57 && seconds === 54) {
+    checkCompletionforStreak()
     completionMessage.textContent = "";
     totalTasks = 0;
     completedTasks = 0;

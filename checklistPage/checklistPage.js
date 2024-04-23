@@ -133,11 +133,13 @@ function updateStreakCounter() {
 
 function loadStreakCount() {
   chrome.storage.sync.get("streak", function (result) {
-    streak = result.streak !== null && result.streak !== undefined ? parseInt(result.streak) : 0;
+    streak =
+      result.streak !== null && result.streak !== undefined
+        ? parseInt(result.streak)
+        : 0;
     updateStreakCounter();
   });
 }
-
 
 loadTaskCounts();
 loadStreakCount();
@@ -149,8 +151,8 @@ function resetAtMidnight() {
   const seconds = now.getSeconds();
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 44 && seconds === 4) {
-    checkCompletionforStreak()
+  if (hours === 22 && minutes === 59 && seconds === 30) {
+    checkCompletionforStreak();
     completionMessage.textContent = "Test 1";
     totalTasks = 0;
     completedTasks = 0;
@@ -163,8 +165,8 @@ function resetAtMidnight() {
   }
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 44 && seconds === 9) {
-    checkCompletionforStreak()
+  if (hours === 22 && minutes === 59 && seconds === 40) {
+    checkCompletionforStreak();
     completionMessage.textContent = "Test 2";
     totalTasks = 0;
     completedTasks = 0;
@@ -175,150 +177,150 @@ function resetAtMidnight() {
 
     chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
   }
-
-  // Check if it's midnight
-  if (hours === 18 && minutes === 44 && seconds === 14) {
-    checkCompletionforStreak()
-    completionMessage.textContent = "Test 3";
-    totalTasks = 0;
-    completedTasks = 0;
-    updateTaskCounter();
-    updateCompletedTaskCounter();
-
-    listContainer.innerHTML = "";
-
-    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
-  }
-
-  // Check if it's midnight
-  if (hours === 18 && minutes === 44 && seconds === 19) {
-    checkCompletionforStreak()
-    completionMessage.textContent = "Test 4";
-    totalTasks = 0;
-    completedTasks = 0;
-    updateTaskCounter();
-    updateCompletedTaskCounter();
-
-    listContainer.innerHTML = "";
-
-    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
-  }
-
-  // Check if it's midnight
-  if (hours === 18 && minutes === 44 && seconds === 24) {
-    checkCompletionforStreak()
-    completionMessage.textContent = "Test 5";
-    totalTasks = 0;
-    completedTasks = 0;
-    updateTaskCounter();
-    updateCompletedTaskCounter();
-
-    listContainer.innerHTML = "";
-
-    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
-  }
-
-  // Check if it's midnight
-  if (hours === 18 && minutes === 44 && seconds === 29) {
-    checkCompletionforStreak()
-    completionMessage.textContent = "Test 6";
-    totalTasks = 0;
-    completedTasks = 0;
-    updateTaskCounter();
-    updateCompletedTaskCounter();
-
-    listContainer.innerHTML = "";
-
-    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
-  }
-
-  // Check if it's midnight
-  if (hours === 18 && minutes === 44 && seconds === 34) {
-    checkCompletionforStreak()
-    completionMessage.textContent = "Test 7";
-    totalTasks = 0;
-    completedTasks = 0;
-    updateTaskCounter();
-    updateCompletedTaskCounter();
-
-    listContainer.innerHTML = "";
-
-    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
-  }
-
-  // Check if it's midnight
-  if (hours === 18 && minutes === 44 && seconds === 39) {
-    checkCompletionforStreak()
-    completionMessage.textContent = "Test 8";
-    totalTasks = 0;
-    completedTasks = 0;
-    updateTaskCounter();
-    updateCompletedTaskCounter();
-
-    listContainer.innerHTML = "";
-
-    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
-  }
-
-  // Check if it's midnight
-  if (hours === 18 && minutes === 44 && seconds === 44) {
-    checkCompletionforStreak()
-    completionMessage.textContent = "Test 9";
-    totalTasks = 0;
-    completedTasks = 0;
-    updateTaskCounter();
-    updateCompletedTaskCounter();
-
-    listContainer.innerHTML = "";
-
-    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
-  }
-
-  // Check if it's midnight
-  if (hours === 18 && minutes === 44 && seconds === 49) {
-    checkCompletionforStreak()
-    completionMessage.textContent = "Test 10";
-    totalTasks = 0;
-    completedTasks = 0;
-    updateTaskCounter();
-    updateCompletedTaskCounter();
-
-    listContainer.innerHTML = "";
-
-    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
-  }
-
-
-  // Check if it's midnight
-  if (hours === 18 && minutes === 44 && seconds === 54) {
-    checkCompletionforStreak()
-    completionMessage.textContent = "Test 11";
-    totalTasks = 0;
-    completedTasks = 0;
-    updateTaskCounter();
-    updateCompletedTaskCounter();
-
-    listContainer.innerHTML = "";
-
-    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
-  }
-
-  // Check if it's midnight
-  if (hours === 18 && minutes === 44 && seconds === 59) {
-    checkCompletionforStreak()
-    completionMessage.textContent = "Test 12";
-    totalTasks = 0;
-    completedTasks = 0;
-    updateTaskCounter();
-    updateCompletedTaskCounter();
-
-    listContainer.innerHTML = "";
-
-    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
-  }
-  // Schedule the next check for the next second
   setTimeout(resetAtMidnight, 1000);
 }
 
 // Start the resetAtMidnight function
 resetAtMidnight();
+
+// // Check if it's midnight
+// if (hours === 18 && minutes === 44 && seconds === 14) {
+//   checkCompletionforStreak()
+//   completionMessage.textContent = "Test 3";
+//   totalTasks = 0;
+//   completedTasks = 0;
+//   updateTaskCounter();
+//   updateCompletedTaskCounter();
+
+//   listContainer.innerHTML = "";
+
+//   chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+// }
+
+// // Check if it's midnight
+// if (hours === 18 && minutes === 44 && seconds === 19) {
+//   checkCompletionforStreak()
+//   completionMessage.textContent = "Test 4";
+//   totalTasks = 0;
+//   completedTasks = 0;
+//   updateTaskCounter();
+//   updateCompletedTaskCounter();
+
+//   listContainer.innerHTML = "";
+
+//   chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+// }
+
+// // Check if it's midnight
+// if (hours === 18 && minutes === 44 && seconds === 24) {
+//   checkCompletionforStreak()
+//   completionMessage.textContent = "Test 5";
+//   totalTasks = 0;
+//   completedTasks = 0;
+//   updateTaskCounter();
+//   updateCompletedTaskCounter();
+
+//   listContainer.innerHTML = "";
+
+//   chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+// }
+
+// // Check if it's midnight
+// if (hours === 18 && minutes === 44 && seconds === 29) {
+//   checkCompletionforStreak()
+//   completionMessage.textContent = "Test 6";
+//   totalTasks = 0;
+//   completedTasks = 0;
+//   updateTaskCounter();
+//   updateCompletedTaskCounter();
+
+//   listContainer.innerHTML = "";
+
+//   chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+// }
+
+// // Check if it's midnight
+// if (hours === 18 && minutes === 44 && seconds === 34) {
+//   checkCompletionforStreak()
+//   completionMessage.textContent = "Test 7";
+//   totalTasks = 0;
+//   completedTasks = 0;
+//   updateTaskCounter();
+//   updateCompletedTaskCounter();
+
+//   listContainer.innerHTML = "";
+
+//   chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+// }
+
+// // Check if it's midnight
+// if (hours === 18 && minutes === 44 && seconds === 39) {
+//   checkCompletionforStreak()
+//   completionMessage.textContent = "Test 8";
+//   totalTasks = 0;
+//   completedTasks = 0;
+//   updateTaskCounter();
+//   updateCompletedTaskCounter();
+
+//   listContainer.innerHTML = "";
+
+//   chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+// }
+
+// // Check if it's midnight
+// if (hours === 18 && minutes === 44 && seconds === 44) {
+//   checkCompletionforStreak()
+//   completionMessage.textContent = "Test 9";
+//   totalTasks = 0;
+//   completedTasks = 0;
+//   updateTaskCounter();
+//   updateCompletedTaskCounter();
+
+//   listContainer.innerHTML = "";
+
+//   chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+// }
+
+// // Check if it's midnight
+// if (hours === 18 && minutes === 44 && seconds === 49) {
+//   checkCompletionforStreak()
+//   completionMessage.textContent = "Test 10";
+//   totalTasks = 0;
+//   completedTasks = 0;
+//   updateTaskCounter();
+//   updateCompletedTaskCounter();
+
+//   listContainer.innerHTML = "";
+
+//   chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+// }
+
+// // Check if it's midnight
+// if (hours === 18 && minutes === 44 && seconds === 54) {
+//   checkCompletionforStreak()
+//   completionMessage.textContent = "Test 11";
+//   totalTasks = 0;
+//   completedTasks = 0;
+//   updateTaskCounter();
+//   updateCompletedTaskCounter();
+
+//   listContainer.innerHTML = "";
+
+//   chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+// }
+
+// // Check if it's midnight
+// if (hours === 18 && minutes === 44 && seconds === 59) {
+//   checkCompletionforStreak()
+//   completionMessage.textContent = "Test 12";
+//   totalTasks = 0;
+//   completedTasks = 0;
+//   updateTaskCounter();
+//   updateCompletedTaskCounter();
+
+//   listContainer.innerHTML = "";
+
+//   chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+// }
+
+// Schedule the next check for the next second

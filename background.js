@@ -182,7 +182,14 @@ chrome.runtime.onMessage.addListener(function(message) {
       chrome.runtime.sendMessage({action:'updateClock'});
       chrome.runtime.sendMessage({action:'setProgress'});
     }
+  }
+  else if(action ==='updateTime'){
+    timer.pomodoro = message.pomodoro;
+    timer.shortBreak = message.shortBreak;
+    timer.longBreak = message.longBreak;
 
+    var currentMode = timer.mode;
+    switchMode(currentMode);
   }
 });
 

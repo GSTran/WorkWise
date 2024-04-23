@@ -86,7 +86,27 @@ mainButton.addEventListener('click', () => {
   }
 });
 
+const changeTimeButton = document.getElementById('changeTimeButton');
+changeTimeButton.addEventListener('click', () => {
+  chrome.runtime.sendMessage({action:'stopTimer'});
 
+  var pomodoroInput = document.getElementById("pomodoroInput").value;
+  var shortBreakInput = document.getElementById("shortBreakInput").value;
+  var longBreakInput = document.getElementById("longBreakInput").value;
+
+  // Parse input values
+  var pomodoro = parseFloat(pomodoroInput);
+  var shortBreak = parseFloat(shortBreakInput);
+  var longBreak = parseFloat(longBreakInput);
+
+  // Check if any parsed value is NaN
+  if (isNaN(pomodoro) || isNaN(shortBreak) || isNaN(longBreak)) {
+      alert("Please enter valid integer values for all inputs.");
+  } else {
+    chrome.runtime.sendMessage({action:'updateTime', pomodoro, shortBreak,longBreak});
+  }
+  
+});
 
 const modeButtons = document.querySelector('#js-mode-buttons')
 modeButtons.addEventListener('click', handleMode);

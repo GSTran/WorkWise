@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="pomodoro.css" />
   </head>
   <body>
-    
+    <main>
       <progress id="js-progress" value="0"></progress>
       <div class="progress-bar"></div>
       <div class="timer">
@@ -43,6 +43,18 @@
         <button class="main-button" data-action="start" id="js-btn">
           Start
         </button>
+      </div>
+      <div class="bottom">
+        Pomodoro 
+        <input type="text" id="pomodoroInput">
+        <br>
+        Short Break 
+        <input type="text" id="shortBreakInput">
+        <br>
+        Long Break
+        <input type ="text" id="longBreakInput">
+        <br>
+        <button class="button" id="changeTimeButton">Submit</button>
       </div>
     </main>
     <div class="hidden">

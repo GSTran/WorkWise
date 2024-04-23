@@ -123,7 +123,8 @@ function resetAtMidnight() {
   const seconds = now.getSeconds();
 
   // Check if it's midnight
-  if (hours === 16 && minutes === 32 && seconds === 34) {
+  if (hours === 17 && minutes === 31 && seconds === 14) {
+    completionMessage.textContent = "";
     totalTasks = 0;
     completedTasks = 0;
     updateTaskCounter();
@@ -133,6 +134,33 @@ function resetAtMidnight() {
 
     chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
   }
+
+  // Check if it's midnight
+  if (hours === 17 && minutes === 31 && seconds === 34) {
+    completionMessage.textContent = "";
+    totalTasks = 0;
+    completedTasks = 0;
+    updateTaskCounter();
+    updateCompletedTaskCounter();
+
+    listContainer.innerHTML = "";
+
+    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+  }
+
+  // Check if it's midnight
+  if (hours === 17 && minutes === 31 && seconds === 54) {
+    completionMessage.textContent = "";
+    totalTasks = 0;
+    completedTasks = 0;
+    updateTaskCounter();
+    updateCompletedTaskCounter();
+
+    listContainer.innerHTML = "";
+
+    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+  }
+
 
   // Schedule the next check for the next second
   setTimeout(resetAtMidnight, 1000);

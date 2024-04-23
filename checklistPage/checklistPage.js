@@ -149,7 +149,7 @@ function resetAtMidnight() {
   const seconds = now.getSeconds();
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 25 && seconds === 4) {
+  if (hours === 18 && minutes === 44 && seconds === 4) {
     checkCompletionforStreak()
     completionMessage.textContent = "Test 1";
     totalTasks = 0;
@@ -163,7 +163,7 @@ function resetAtMidnight() {
   }
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 25 && seconds === 9) {
+  if (hours === 18 && minutes === 44 && seconds === 9) {
     checkCompletionforStreak()
     completionMessage.textContent = "Test 2";
     totalTasks = 0;
@@ -177,7 +177,7 @@ function resetAtMidnight() {
   }
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 25 && seconds === 14) {
+  if (hours === 18 && minutes === 44 && seconds === 14) {
     checkCompletionforStreak()
     completionMessage.textContent = "Test 3";
     totalTasks = 0;
@@ -191,7 +191,7 @@ function resetAtMidnight() {
   }
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 25 && seconds === 19) {
+  if (hours === 18 && minutes === 44 && seconds === 19) {
     checkCompletionforStreak()
     completionMessage.textContent = "Test 4";
     totalTasks = 0;
@@ -205,7 +205,7 @@ function resetAtMidnight() {
   }
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 25 && seconds === 24) {
+  if (hours === 18 && minutes === 44 && seconds === 24) {
     checkCompletionforStreak()
     completionMessage.textContent = "Test 5";
     totalTasks = 0;
@@ -219,7 +219,7 @@ function resetAtMidnight() {
   }
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 25 && seconds === 29) {
+  if (hours === 18 && minutes === 44 && seconds === 29) {
     checkCompletionforStreak()
     completionMessage.textContent = "Test 6";
     totalTasks = 0;
@@ -233,7 +233,7 @@ function resetAtMidnight() {
   }
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 25 && seconds === 34) {
+  if (hours === 18 && minutes === 44 && seconds === 34) {
     checkCompletionforStreak()
     completionMessage.textContent = "Test 7";
     totalTasks = 0;
@@ -247,7 +247,7 @@ function resetAtMidnight() {
   }
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 25 && seconds === 39) {
+  if (hours === 18 && minutes === 44 && seconds === 39) {
     checkCompletionforStreak()
     completionMessage.textContent = "Test 8";
     totalTasks = 0;
@@ -261,7 +261,7 @@ function resetAtMidnight() {
   }
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 25 && seconds === 44) {
+  if (hours === 18 && minutes === 44 && seconds === 44) {
     checkCompletionforStreak()
     completionMessage.textContent = "Test 9";
     totalTasks = 0;
@@ -275,7 +275,7 @@ function resetAtMidnight() {
   }
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 25 && seconds === 49) {
+  if (hours === 18 && minutes === 44 && seconds === 49) {
     checkCompletionforStreak()
     completionMessage.textContent = "Test 10";
     totalTasks = 0;
@@ -290,7 +290,7 @@ function resetAtMidnight() {
 
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 25 && seconds === 54) {
+  if (hours === 18 && minutes === 44 && seconds === 54) {
     checkCompletionforStreak()
     completionMessage.textContent = "Test 11";
     totalTasks = 0;
@@ -304,7 +304,7 @@ function resetAtMidnight() {
   }
 
   // Check if it's midnight
-  if (hours === 18 && minutes === 25 && seconds === 59) {
+  if (hours === 18 && minutes === 44 && seconds === 59) {
     checkCompletionforStreak()
     completionMessage.textContent = "Test 12";
     totalTasks = 0;

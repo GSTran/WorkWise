@@ -151,23 +151,25 @@ function checkAndResetAtMidnight() {
 
     // Get the current minute
     const now = new Date();
-    const currentMinute = now.getDate();
+    const currentMinute = now.getMinutes();
 
     // Get the old minute
     const oldDate = new Date(lastResetDate);
-    const oldMinute = oldDate.getDate();
+    const oldMinute = oldDate.getMinutes();
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDate
     // Print the values of oldMinute and currentMinute
-    console.log("Old Minute:", oldDate.getDate());
-    console.log("Current Minute:", now.getDate());
+    console.log("Old Minute:", oldDate.getMinutes());
+    console.log("Current Minute:", now.getMinutes());
 
     // Compare the last reset date with the current date
     if (oldMinute !== currentMinute) {
-      if (oldMinute != currentMinute - 1) {
-        reset();
+      //Check if it a back to back minutes
+      if (oldMinute !== currentMinute - 1) {
+        if (!(oldMinute === 59 && currentMinute === 0)) {
+          reset();
+        }
       }
-      // If it's a new minute, call the reset function
       resetAtMidnight();
 
       // Update the last reset date in storage

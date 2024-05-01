@@ -144,41 +144,59 @@ function loadStreakCount() {
 loadTaskCounts();
 loadStreakCount();
 
-function resetAtMidnight() {
-  const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const seconds = now.getSeconds();
+function checkAndResetAtMidnight() {
+  // Retrieve the last reset date from storage
+  chrome.storage.sync.get("lastResetDate", function (data) {
+    let lastResetDate = data.lastResetDate;
 
-  // Check if it's midnight
-  if (hours === 22 && minutes === 59 && seconds === 30) {
-    checkCompletionforStreak();
-    completionMessage.textContent = "Test 1";
-    totalTasks = 0;
-    completedTasks = 0;
-    updateTaskCounter();
-    updateCompletedTaskCounter();
+    // Get the current minute
+    const now = new Date();
+    const currentMinute = now.getMinutes();
 
-    listContainer.innerHTML = "";
+    // Get the old minute
+    const oldDate = new Date(lastResetDate);
+    const oldMinute = oldDate.getMinutes();
 
-    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
-  }
+    // Print the values of oldMinute and currentMinute
+    console.log("Old Minute:", oldMinute);
+    console.log("Current Minute:", currentMinute);
 
-  // Check if it's midnight
-  if (hours === 22 && minutes === 59 && seconds === 40) {
-    checkCompletionforStreak();
-    completionMessage.textContent = "Test 2";
-    totalTasks = 0;
-    completedTasks = 0;
-    updateTaskCounter();
-    updateCompletedTaskCounter();
+    // Compare the last reset date with the current date
+    if (oldMinute !== currentMinute) {
+      if (oldMinute != currentMinute - 1) {
+        reset();
+      }
+      // If it's a new minute, call the reset function
+      resetAtMidnight();
 
-    listContainer.innerHTML = "";
-
-    chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
-  }
-  setTimeout(resetAtMidnight, 1000);
+      // Update the last reset date in storage
+      chrome.storage.sync.set({ lastResetDate: now.toString() });
+    }
+  });
+  setTimeout(checkAndResetAtMidnight, 1000);
 }
 
-// Start the resetAtMidnight function
-resetAtMidnight();
+function reset() {
+  // Reset actions for Test 1
+  completionMessage.textContent = "Test 1";
+  totalTasks = 0;
+  completedTasks = 0;
+  updateTaskCounter();
+  updateCompletedTaskCounter();
+  listContainer.innerHTML = "";
+  chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+}
+
+function resetAtMidnight() {
+  // Reset actions for Test 1
+  checkCompletionforStreak();
+  completionMessage.textContent = "Test 1";
+  totalTasks = 0;
+  completedTasks = 0;
+  updateTaskCounter();
+  updateCompletedTaskCounter();
+  listContainer.innerHTML = "";
+  chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+}
+
+checkAndResetAtMidnight();

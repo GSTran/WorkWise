@@ -151,11 +151,11 @@ function checkAndResetAtMidnight() {
 
     // Get the current minute
     const now = new Date();
-    const currentMinute = now.getMinutes();
+    const currentMinute = now.getDate();
 
     // Get the old minute
     const oldDate = new Date(lastResetDate);
-    const oldMinute = oldDate.getMinutes();
+    const oldMinute = oldDate.getDate();
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDate
     // Print the values of oldMinute and currentMinute

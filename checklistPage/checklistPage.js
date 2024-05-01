@@ -157,9 +157,10 @@ function checkAndResetAtMidnight() {
     const oldDate = new Date(lastResetDate);
     const oldMinute = oldDate.getMinutes();
 
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDate
     // Print the values of oldMinute and currentMinute
-    console.log("Old Minute:", oldMinute);
-    console.log("Current Minute:", currentMinute);
+    console.log("Old Minute:", oldDate.getDate());
+    console.log("Current Minute:", now.getDate());
 
     // Compare the last reset date with the current date
     if (oldMinute !== currentMinute) {

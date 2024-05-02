@@ -153,6 +153,11 @@ chrome.runtime.onMessage.addListener(function(message) {
   else if (action === 'stopTimer'){
     stopTimer();
   }
+  else if (action === 'resetTimer'){
+    stopTimer();
+    timer.sessions = 0;
+    switchMode('pomodoro');
+  }
   else if (action === 'pomOpen'){
     pomIsOpen=true;
   }
@@ -182,7 +187,24 @@ chrome.runtime.onMessage.addListener(function(message) {
       chrome.runtime.sendMessage({action:'updateClock'});
       chrome.runtime.sendMessage({action:'setProgress'});
     }
+  }
+  else if(action ==='updateTime'){
+    stopTimer();
+    timer.pomodoro = message.pomodoro;
+    timer.shortBreak = message.shortBreak;
+    timer.longBreak = message.longBreak;
 
+    var longBreakInterval = message.longBreakInterval;
+    if(longBreakInterval<=0)
+    {
+      timer.longBreakInterval = 1;
+    }
+    else{
+      timer.longBreakInterval = longBreakInterval;
+    }
+
+    var currentMode = timer.mode;
+    switchMode(currentMode);
   }
 });
 

@@ -86,9 +86,14 @@ mainButton.addEventListener('click', () => {
   }
 });
 
+const resetButton = document.getElementById('resetButton');
+resetButton.addEventListener('click', () =>{
+  chrome.runtime.sendMessage({action:'resetTimer'});
+});
+
 const changeTimeButton = document.getElementById('changeTimeButton');
 changeTimeButton.addEventListener('click', () => {
-  chrome.runtime.sendMessage({action:'stopTimer'});
+  //chrome.runtime.sendMessage({action:'stopTimer'});
 
   var pomodoroInput = document.getElementById("pomodoroInput").value;
   var shortBreakInput = document.getElementById("shortBreakInput").value;

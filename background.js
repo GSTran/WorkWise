@@ -153,6 +153,11 @@ chrome.runtime.onMessage.addListener(function(message) {
   else if (action === 'stopTimer'){
     stopTimer();
   }
+  else if (action === 'resetTimer'){
+    stopTimer();
+    timer.sessions = 0;
+    switchMode('pomodoro');
+  }
   else if (action === 'pomOpen'){
     pomIsOpen=true;
   }
@@ -184,6 +189,7 @@ chrome.runtime.onMessage.addListener(function(message) {
     }
   }
   else if(action ==='updateTime'){
+    stopTimer();
     timer.pomodoro = message.pomodoro;
     timer.shortBreak = message.shortBreak;
     timer.longBreak = message.longBreak;

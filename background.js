@@ -153,6 +153,11 @@ chrome.runtime.onMessage.addListener(function(message) {
   else if (action === 'stopTimer'){
     stopTimer();
   }
+  else if (action === 'resetTimer'){
+    stopTimer();
+    timer.sessions = 0;
+    switchMode('pomodoro');
+  }
   else if (action === 'pomOpen'){
     pomIsOpen=true;
   }
@@ -182,7 +187,24 @@ chrome.runtime.onMessage.addListener(function(message) {
       chrome.runtime.sendMessage({action:'updateClock'});
       chrome.runtime.sendMessage({action:'setProgress'});
     }
+  }
+  else if(action ==='updateTime'){
+    stopTimer();
+    timer.pomodoro = message.pomodoro;
+    timer.shortBreak = message.shortBreak;
+    timer.longBreak = message.longBreak;
 
+    var longBreakInterval = message.longBreakInterval;
+    if(longBreakInterval<=0)
+    {
+      timer.longBreakInterval = 1;
+    }
+    else{
+      timer.longBreakInterval = longBreakInterval;
+    }
+
+    var currentMode = timer.mode;
+    switchMode(currentMode);
   }
 });
 
@@ -191,7 +213,7 @@ chrome.windows.onRemoved.addListener((windowId) => {
   // Retrieve information about the closed window
   chrome.windows.get(windowId, { populate: false }, (closedWindow) => {
       if (chrome.runtime.lastError) {
-          console.error(`Error retrieving window with ID ${windowId}:`, chrome.runtime.lastError);
+          //console.error(`Error retrieving window with ID ${windowId}:`, chrome.runtime.lastError);
           return;
       }
 
@@ -275,11 +297,9 @@ function startTimer() {
              switchMode('pomodoro');
          }
 
-        if (Notification.permission === 'granted') {
           const text =
             timer.mode === 'pomodoro' ? 'Get back to work!' : 'Take a break!';
-          new Notification(text);
-        }
+            pomonotify(text);
 
         playSound(timer.mode);
   
@@ -287,6 +307,17 @@ function startTimer() {
       }
     }, 1000);
 };
+
+function pomonotify(text) {
+  chrome.notifications.create(
+    {
+      type: "basic",
+      title: "Pomodoro Timer",
+      message: text,
+      iconUrl: "../img/cat.png"
+    }
+  );
+}
 
 function getRemainingTime(endTime) {
   const currentTime = Date.parse(new Date());

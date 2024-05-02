@@ -6,7 +6,8 @@
   "permissions": [
     "storage",
     "tabs",
-    "offscreen"
+    "offscreen",
+    "notifications"
   ],
   "background": {
     "service_worker": "background.js"

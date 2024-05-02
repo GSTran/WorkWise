@@ -250,7 +250,6 @@ function checkAndResetAtMidnight() {
 
 function reset() {
   updatePastSevenDaysData();
-  displayPastSevenDaysStats();
   // Reset actions for Test 1
   completionMessage.textContent = "Test 1";
   totalTasks = 0;
@@ -259,11 +258,11 @@ function reset() {
   updateCompletedTaskCounter();
   listContainer.innerHTML = "";
   chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+  displayPastSevenDaysStats();
 }
 
 function resetAtMidnight() {
   updatePastSevenDaysData();
-  displayPastSevenDaysStats();
   // Reset actions for Test 1
   checkCompletionforStreak();
   completionMessage.textContent = "Test 1";
@@ -273,8 +272,9 @@ function resetAtMidnight() {
   updateCompletedTaskCounter();
   listContainer.innerHTML = "";
   chrome.storage.sync.remove(["data", "totalTasks", "completedTasks"]);
+  displayPastSevenDaysStats();
 }
 
 checkAndResetAtMidnight();
-
+displayPastSevenDaysStats();
 

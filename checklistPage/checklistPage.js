@@ -23,9 +23,9 @@ function addTask() {
 
     totalTasks++;
     updateTaskCounter();
-
     // Check completion status after adding a task
     recheckCompletionStatus();
+    // Update past seven days data
   }
   inputBox.value = "";
   saveData();
@@ -46,6 +46,7 @@ listContainer.addEventListener(
       saveData();
       updateCompletedTaskCounter();
       recheckCompletionStatus(); // Check completion status after modifying a task
+
     } else if (e.target.tagName === "SPAN") {
       e.target.parentElement.remove();
       totalTasks--;
@@ -55,6 +56,7 @@ listContainer.addEventListener(
       updateTaskCounter();
       updateCompletedTaskCounter();
       recheckCompletionStatus(); // Check completion status after modifying a task
+
       saveData();
     }
   },
@@ -62,12 +64,14 @@ listContainer.addEventListener(
 );
 
 function saveData() {
-  chrome.storage.sync.set({ data: listContainer.innerHTML });
+  chrome.storage.sync.set({ data: listContainer.innerHTML, pastSevenDaysData: pastSevenDaysData });
 }
 
+// Modify the showTask function to load both task list and past seven days data
 function showTask() {
-  chrome.storage.sync.get("data", function (result) {
+  chrome.storage.sync.get(["data", "pastSevenDaysData"], function (result) {
     listContainer.innerHTML = result.data || "";
+    pastSevenDaysData = result.pastSevenDaysData || pastSevenDaysData;
   });
 }
 
@@ -144,6 +148,71 @@ function loadStreakCount() {
 loadTaskCounts();
 loadStreakCount();
 
+//----------------------------------------------------------------------------------------------
+let pastSevenDaysData = [];
+
+function initializePastSevenDaysData() {
+    // Initialize pastSevenDaysData array with empty objects for the past 7 days
+    for (let i = 0; i < 7; i++) {
+        pastSevenDaysData.push({ date: getDateNDaysAgo(i), totalTasks: 0, completedTasks: 0 });
+    }
+}
+
+function updatePastSevenDaysData() {
+  // Remove the last element (oldest data)
+  pastSevenDaysData.pop();
+
+  // Insert the new data at the beginning
+  pastSevenDaysData.unshift({
+    date: getDateNDaysAgo(0), // Date for the newest entry
+    totalTasks: totalTasks,
+    completedTasks: completedTasks
+  });
+
+  // Save past seven days data to Chrome storage
+  chrome.storage.sync.set({ pastSevenDaysData: pastSevenDaysData }, function() {
+    // After saving, calculate and save past seven days statistics
+    const { pastSevenDaysTotalTasks, pastSevenDaysCompletedTasks } = calculatePastSevenDaysStats();
+    chrome.storage.sync.set({ 
+      pastSevenDaysTotalTasks: pastSevenDaysTotalTasks, 
+      pastSevenDaysCompletedTasks: pastSevenDaysCompletedTasks 
+    });
+  });
+}
+
+function getDateNDaysAgo(n) {
+    const today = new Date();
+    const pastDate = new Date(today);
+    pastDate.setDate(today.getDate() - n);
+    return pastDate.toDateString();
+}
+
+function calculatePastSevenDaysStats() {
+    let pastSevenDaysTotalTasks = 0;
+    let pastSevenDaysCompletedTasks = 0;
+    
+    // Calculate total and completed tasks for the past 7 days
+    pastSevenDaysData.forEach(day => {
+        pastSevenDaysTotalTasks += day.totalTasks;
+        pastSevenDaysCompletedTasks += day.completedTasks;
+    });
+    
+    return { pastSevenDaysTotalTasks, pastSevenDaysCompletedTasks };
+}
+
+function displayPastSevenDaysStats() {
+    chrome.storage.sync.get(["pastSevenDaysTotalTasks", "pastSevenDaysCompletedTasks"], function(data) {
+        const pastSevenDaysTotalTasks = data.pastSevenDaysTotalTasks || 0;
+        const pastSevenDaysCompletedTasks = data.pastSevenDaysCompletedTasks || 0;
+
+        const statsContainer = document.getElementById("past-seven-days-stats");
+        statsContainer.textContent = `User completed ${pastSevenDaysCompletedTasks} tasks out of ${pastSevenDaysTotalTasks} in the past 7 days.`;
+    });
+}
+
+initializePastSevenDaysData();
+
+//----------------------------------------------------------------------------------------------
 function checkAndResetAtMidnight() {
   // Retrieve the last reset date from storage
   chrome.storage.sync.get("lastResetDate", function (data) {
@@ -180,6 +249,8 @@ function checkAndResetAtMidnight() {
 }
 
 function reset() {
+  updatePastSevenDaysData();
+  displayPastSevenDaysStats();
   // Reset actions for Test 1
   completionMessage.textContent = "Test 1";
   totalTasks = 0;
@@ -191,6 +262,8 @@ function reset() {
 }
 
 function resetAtMidnight() {
+  updatePastSevenDaysData();
+  displayPastSevenDaysStats();
   // Reset actions for Test 1
   checkCompletionforStreak();
   completionMessage.textContent = "Test 1";
@@ -203,3 +276,5 @@ function resetAtMidnight() {
 }
 
 checkAndResetAtMidnight();
+
+

@@ -297,11 +297,9 @@ function startTimer() {
              switchMode('pomodoro');
          }
 
-        if (Notification.permission === 'granted') {
           const text =
             timer.mode === 'pomodoro' ? 'Get back to work!' : 'Take a break!';
-          new Notification(text);
-        }
+            pomonotify(text);
 
         playSound(timer.mode);
   
@@ -309,6 +307,17 @@ function startTimer() {
       }
     }, 1000);
 };
+
+function pomonotify(text) {
+  chrome.notifications.create(
+    {
+      type: "basic",
+      title: "Pomodoro Timer",
+      message: text,
+      iconUrl: "../img/cat.png"
+    }
+  );
+}
 
 function getRemainingTime(endTime) {
   const currentTime = Date.parse(new Date());

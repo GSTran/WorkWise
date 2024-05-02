@@ -213,7 +213,7 @@ chrome.windows.onRemoved.addListener((windowId) => {
   // Retrieve information about the closed window
   chrome.windows.get(windowId, { populate: false }, (closedWindow) => {
       if (chrome.runtime.lastError) {
-          console.error(`Error retrieving window with ID ${windowId}:`, chrome.runtime.lastError);
+          //console.error(`Error retrieving window with ID ${windowId}:`, chrome.runtime.lastError);
           return;
       }
 

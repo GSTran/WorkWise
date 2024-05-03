@@ -20,6 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
   chrome.runtime.sendMessage({ action: 'initialize' });
   chrome.runtime.sendMessage({ action: 'buttonStatus' });
   chrome.runtime.sendMessage({ action: 'getMode' });
+
+  chrome.storage.local.get('timerNotify', function(data) {
+    if (data.timerNotify)
+      toggleNotifications.checked = true;
+    else
+      toggleNotifications.checked = false;
+  });
 });
 
 

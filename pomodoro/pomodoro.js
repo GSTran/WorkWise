@@ -121,9 +121,22 @@ settingsButton.addEventListener('click', () => {
   settingsMenu.classList.toggle("hidden");
 })
 
+var toggleNotifications = document.getElementById('pomoNotifyToggle');
+toggleNotifications.addEventListener('click', function() {
+  console.log("You are switching me")
+  console.log(toggleNotifications.value)
+  // Check if the switch is checked
+  if (toggleNotifications.checked) {
+    console.log('Switch is ON');
+  } 
+  if (!toggleNotifications.checked){
+    console.log('Switch is OFF');
+  }
+});
+
+
 const modeButtons = document.querySelector('#js-mode-buttons')
 modeButtons.addEventListener('click', handleMode);
-
 function handleMode(event){
     const { mode } = event.target.dataset;
 

@@ -158,27 +158,28 @@ function initializePastSevenDaysData() {
     }
 }
 
-function updatePastSevenDaysData() {
-  // Remove the last element (oldest data)
-  pastSevenDaysData.pop();
+async function updatePastSevenDaysData() {
+  // Remove the first element (oldest data)
+  pastSevenDaysData.shift();
 
-  // Insert the new data at the beginning
-  pastSevenDaysData.unshift({
+  // Insert the new data at the end
+  pastSevenDaysData.push({
     date: getDateNDaysAgo(0), // Date for the newest entry
     totalTasks: totalTasks,
     completedTasks: completedTasks
   });
 
   // Save past seven days data to Chrome storage
-  chrome.storage.sync.set({ pastSevenDaysData: pastSevenDaysData }, function() {
-    // After saving, calculate and save past seven days statistics
-    const { pastSevenDaysTotalTasks, pastSevenDaysCompletedTasks } = calculatePastSevenDaysStats();
-    chrome.storage.sync.set({ 
-      pastSevenDaysTotalTasks: pastSevenDaysTotalTasks, 
-      pastSevenDaysCompletedTasks: pastSevenDaysCompletedTasks 
-    });
+  await chrome.storage.sync.set({ pastSevenDaysData: pastSevenDaysData });
+
+  // After saving, calculate and save past seven days statistics
+  const { pastSevenDaysTotalTasks, pastSevenDaysCompletedTasks } = calculatePastSevenDaysStats();
+  await chrome.storage.sync.set({ 
+    pastSevenDaysTotalTasks: pastSevenDaysTotalTasks, 
+    pastSevenDaysCompletedTasks: pastSevenDaysCompletedTasks 
   });
 }
+
 
 function getDateNDaysAgo(n) {
     const today = new Date();
@@ -261,8 +262,8 @@ function reset() {
   displayPastSevenDaysStats();
 }
 
-function resetAtMidnight() {
-  updatePastSevenDaysData();
+async function resetAtMidnight() {
+  await updatePastSevenDaysData();
   // Reset actions for Test 1
   checkCompletionforStreak();
   completionMessage.textContent = "Test 1";

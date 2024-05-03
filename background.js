@@ -4,9 +4,9 @@ var trackingEnabled = false;
 var startTimeMap = {};
 
 // Listen for tab changes
-chrome.tabs.onActivated.addListener(function(activeInfo) {
+chrome.tabs.onActivated.addListener(function (activeInfo) {
   if (trackingEnabled) {
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       var currentTab = tabs[0];
       var url = extractDomain(currentTab.url);
       var currentTime = new Date().getTime();
@@ -19,7 +19,7 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
         trackTimeOnWebsite(previousTabUrl, elapsedTime);
         delete startTimeMap[previousTabUrl];
       }
-      
+
       // Store the start time for the current tab
       startTimeMap[url] = currentTime;
     });
@@ -57,15 +57,15 @@ function extractDomain(url) {
 
 function trackTimeOnWebsite(url, elapsedTime) {
   var key = 'websiteData';
-  
+
   // Retrieve stored time for all websites
-  chrome.storage.local.get(key, function(data) {
+  chrome.storage.local.get(key, function (data) {
     var websiteDataArray = data[key] || [];
     console.log("data:");
     console.log(data);
 
     // Find the website data in the array or create a new entry if it doesn't exist
-    var websiteIndex = websiteDataArray.findIndex(function(website) {
+    var websiteIndex = websiteDataArray.findIndex(function (website) {
       return website.url === url;
     });
 
@@ -80,12 +80,12 @@ function trackTimeOnWebsite(url, elapsedTime) {
     // Update the stored data with the updated website data array
     var newData = {};
     newData[key] = websiteDataArray;
-    chrome.storage.local.set(newData, function() {
+    chrome.storage.local.set(newData, function () {
       // Optional code to execute after setting data in local storage
       // console.log("Data right after setting:");
       // console.log(websiteDataArray);
     });
-    chrome.storage.local.get(newData, function(data){
+    chrome.storage.local.get(newData, function (data) {
       //console.log(data);
     });
     //chrome.storage.local.get(console.log);
@@ -99,7 +99,7 @@ function trackTimeOnWebsite(url, elapsedTime) {
 
 
 // Listen for messages from popup for website tracking
-chrome.runtime.onMessage.addListener(function(message, sender) {
+chrome.runtime.onMessage.addListener(function (message, sender) {
   var action = message.action;
 
   if (action === 'startTracking') {
@@ -113,16 +113,16 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
     // Respond to the request with the time data
     sendTimeData();
   }
-  
+
 });
 
 
 // Function to send time data to the requesting script
 function sendTimeData() {
   // Retrieve all time data from storage
-  chrome.storage.local.get('websiteData', function(data) {
+  chrome.storage.local.get('websiteData', function (data) {
     // Send the time data back to the requesting script
-    chrome.runtime.sendMessage({ action: 'updateTime', timeData:data,tracking:trackingEnabled });
+    chrome.runtime.sendMessage({ action: 'updateTime', timeData: data, tracking: trackingEnabled });
   });
 }
 
@@ -135,7 +135,7 @@ const timer = {
   pomodoro: 0.2,
   shortBreak: 0.2,
   longBreak: 0.4,
-  longBreakInterval:2,
+  longBreakInterval: 2,
   sessions: 0,
 };
 updateTimerInStorage(timer);
@@ -145,61 +145,60 @@ var pomIsOpen = false;
 var timerRunning = false;
 
 //Listen for messages from popup for pomodoro timer
-chrome.runtime.onMessage.addListener(function(message) {
+chrome.runtime.onMessage.addListener(function (message) {
   var action = message.action;
-  if (action === 'startTimer'){
+  if (action === 'startTimer') {
     startTimer();
   }
-  else if (action === 'stopTimer'){
+  else if (action === 'stopTimer') {
     stopTimer();
   }
-  else if (action === 'resetTimer'){
+  else if (action === 'resetTimer') {
     stopTimer();
     timer.sessions = 0;
     switchMode('pomodoro');
   }
-  else if (action === 'pomOpen'){
-    pomIsOpen=true;
+  else if (action === 'pomOpen') {
+    pomIsOpen = true;
   }
-  else if(action === 'pomClose'){
-    pomIsOpen=false;
+  else if (action === 'pomClose') {
+    pomIsOpen = false;
   }
-  else if (action ==='buttonStatus'){
-    if(timerRunning){
-      chrome.runtime.sendMessage({action: 'mainButtonOn'});
+  else if (action === 'buttonStatus') {
+    if (timerRunning) {
+      chrome.runtime.sendMessage({ action: 'mainButtonOn' });
     }
-    else{
-      chrome.runtime.sendMessage({action: 'mainButtonOff'});
+    else {
+      chrome.runtime.sendMessage({ action: 'mainButtonOff' });
     }
   }
-  else if(action ==='switchMode'){
-      switchMode(message.mode);
+  else if (action === 'switchMode') {
+    switchMode(message.mode);
   }
-  else if (action ==='getMode'){
-      chrome.runtime.sendMessage({action: 'getMode', mode:timer.mode});
+  else if (action === 'getMode') {
+    chrome.runtime.sendMessage({ action: 'getMode', mode: timer.mode });
   }
-  else if (action ==='initialize'){
-    if(firstTime){
+  else if (action === 'initialize') {
+    if (firstTime) {
       switchMode('pomodoro');
       firstTime = false;
     }
     else {
-      chrome.runtime.sendMessage({action:'updateClock'});
-      chrome.runtime.sendMessage({action:'setProgress'});
+      chrome.runtime.sendMessage({ action: 'updateClock' });
+      chrome.runtime.sendMessage({ action: 'setProgress' });
     }
   }
-  else if(action ==='updateTime'){
+  else if (action === 'updateTime') {
     stopTimer();
     timer.pomodoro = message.pomodoro;
     timer.shortBreak = message.shortBreak;
     timer.longBreak = message.longBreak;
 
     var longBreakInterval = message.longBreakInterval;
-    if(longBreakInterval<=0)
-    {
+    if (longBreakInterval <= 0) {
       timer.longBreakInterval = 1;
     }
-    else{
+    else {
       timer.longBreakInterval = longBreakInterval;
     }
 
@@ -212,20 +211,20 @@ chrome.runtime.onMessage.addListener(function(message) {
 chrome.windows.onRemoved.addListener((windowId) => {
   // Retrieve information about the closed window
   chrome.windows.get(windowId, { populate: false }, (closedWindow) => {
-      if (chrome.runtime.lastError) {
-          //console.error(`Error retrieving window with ID ${windowId}:`, chrome.runtime.lastError);
-          return;
-      }
+    if (chrome.runtime.lastError) {
+      //console.error(`Error retrieving window with ID ${windowId}:`, chrome.runtime.lastError);
+      return;
+    }
 
-      if (closedWindow && closedWindow.type === 'popup') {  
-        pomisOpen = false; 
-      }
+    if (closedWindow && closedWindow.type === 'popup') {
+      pomisOpen = false;
+    }
   });
 });
 
 function updateTimerInStorage(newTimer) {
   chrome.storage.local.set({ timer: newTimer }, () => {
-      //console.log('Timer updated in storage:', newTimer);
+    //console.log('Timer updated in storage:', newTimer);
   });
 }
 
@@ -239,21 +238,21 @@ function updateTimerInStorage(newTimer) {
 async function playSound(source) {
   await createOffscreen();
   //console.log(chrome.offscreen.hasDocument());
-  await chrome.runtime.sendMessage({ action: 'play', mode: source});
+  await chrome.runtime.sendMessage({ action: 'play', mode: source });
 }
 
 // Create the offscreen document if it doesn't already exist
 async function createOffscreen() {
   if (await chrome.offscreen.hasDocument()) return;
   await chrome.offscreen.createDocument({
-      url: './pomodoro/pomodoroOffscreen.html',
-      reasons: ['AUDIO_PLAYBACK'],
-      justification: 'playing audio'
+    url: './pomodoro/pomodoroOffscreen.html',
+    reasons: ['AUDIO_PLAYBACK'],
+    justification: 'playing audio'
   });
   //console.log("offscreen doc created");
 }
 
-async function switchMode(mode){
+async function switchMode(mode) {
   timer.mode = mode;
   timer.remainingTime = {
     total: timer[mode] * 60,
@@ -262,50 +261,54 @@ async function switchMode(mode){
   };
   await updateTimerInStorage(timer);
 
-  chrome.runtime.sendMessage({action:'contSwitchMode', mode});
+  chrome.runtime.sendMessage({ action: 'contSwitchMode', mode });
 };
 
 function startTimer() {
   //console.log("Sound request sent");
-  timerRunning=true;
+  timerRunning = true;
   let { total } = timer.remainingTime;
   const endTime = Date.parse(new Date()) + total * 1000;
 
   if (timer.mode === 'pomodoro') timer.sessions++;
 
-  interval = setInterval(async function() {
-  timer.remainingTime = getRemainingTime(endTime);
-  if(pomIsOpen){
-    await updateTimerInStorage(timer);
-    chrome.runtime.sendMessage({action:'updateClock'});
-   } 
-     
-     total = timer.remainingTime.total;
-     //console.log("Total: " + total + pomIsOpen);
-     if (total <= 0) {
-       clearInterval(interval);
-      
-       switch (timer.mode) {
-         case 'pomodoro':
-             if (timer.sessions % timer.longBreakInterval === 0) {
-               switchMode('longBreak');
-             } else {
-               switchMode('shortBreak');
-             }
-             break;
-             default:
-             switchMode('pomodoro');
-         }
+  interval = setInterval(async function () {
+    timer.remainingTime = getRemainingTime(endTime);
+    if (pomIsOpen) {
+      await updateTimerInStorage(timer);
+      chrome.runtime.sendMessage({ action: 'updateClock' });
+    }
 
+    total = timer.remainingTime.total;
+    //console.log("Total: " + total + pomIsOpen);
+    if (total <= 0) {
+      clearInterval(interval);
+
+      switch (timer.mode) {
+        case 'pomodoro':
+          if (timer.sessions % timer.longBreakInterval === 0) {
+            switchMode('longBreak');
+          } else {
+            switchMode('shortBreak');
+          }
+          break;
+        default:
+          switchMode('pomodoro');
+      }
+
+      chrome.storage.local.get('timerNotify', function(data) {
+        if (data.timerNotify === 1) {
           const text =
             timer.mode === 'pomodoro' ? 'Get back to work!' : 'Take a break!';
             pomonotify(text);
+        }
+      });
 
-        playSound(timer.mode);
-  
-       startTimer();
-      }
-    }, 1000);
+      playSound(timer.mode);
+
+      startTimer();
+    }
+  }, 1000);
 };
 
 function pomonotify(text) {
@@ -335,9 +338,9 @@ function getRemainingTime(endTime) {
 };
 
 function stopTimer() {
-clearInterval(interval);
-updateTimerInStorage(timer);
-timerRunning = false;
-if(pomIsOpen)
-  chrome.runtime.sendMessage({action:'mainButtonOff'});
+  clearInterval(interval);
+  updateTimerInStorage(timer);
+  timerRunning = false;
+  if (pomIsOpen)
+    chrome.runtime.sendMessage({ action: 'mainButtonOff' });
 };

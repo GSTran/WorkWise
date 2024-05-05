@@ -12,7 +12,7 @@ let streak = 0;
 
 function addTask() {
   if (inputBox.value === "") {
-    alert("Goober write something!");
+    alert("Write something!");
   } else {
     let li = document.createElement("li");
     li.innerHTML = inputBox.value;
@@ -46,7 +46,6 @@ listContainer.addEventListener(
       saveData();
       updateCompletedTaskCounter();
       recheckCompletionStatus(); // Check completion status after modifying a task
-
     } else if (e.target.tagName === "SPAN") {
       e.target.parentElement.remove();
       totalTasks--;
@@ -64,7 +63,10 @@ listContainer.addEventListener(
 );
 
 function saveData() {
-  chrome.storage.sync.set({ data: listContainer.innerHTML, pastSevenDaysData: pastSevenDaysData });
+  chrome.storage.sync.set({
+    data: listContainer.innerHTML,
+    pastSevenDaysData: pastSevenDaysData,
+  });
 }
 
 // Modify the showTask function to load both task list and past seven days data
@@ -152,10 +154,14 @@ loadStreakCount();
 let pastSevenDaysData = [];
 
 function initializePastSevenDaysData() {
-    // Initialize pastSevenDaysData array with empty objects for the past 7 days
-    for (let i = 0; i < 7; i++) {
-        pastSevenDaysData.push({ date: getDateNDaysAgo(i), totalTasks: 0, completedTasks: 0 });
-    }
+  // Initialize pastSevenDaysData array with empty objects for the past 7 days
+  for (let i = 0; i < 7; i++) {
+    pastSevenDaysData.push({
+      date: getDateNDaysAgo(i),
+      totalTasks: 0,
+      completedTasks: 0,
+    });
+  }
 }
 
 async function updatePastSevenDaysData() {
@@ -166,49 +172,59 @@ async function updatePastSevenDaysData() {
   pastSevenDaysData.push({
     date: getDateNDaysAgo(0), // Date for the newest entry
     totalTasks: totalTasks,
-    completedTasks: completedTasks
+    completedTasks: completedTasks,
   });
 
   // Save past seven days data to Chrome storage
   await chrome.storage.sync.set({ pastSevenDaysData: pastSevenDaysData });
 
   // After saving, calculate and save past seven days statistics
-  const { pastSevenDaysTotalTasks, pastSevenDaysCompletedTasks } = calculatePastSevenDaysStats();
-  await chrome.storage.sync.set({ 
-    pastSevenDaysTotalTasks: pastSevenDaysTotalTasks, 
-    pastSevenDaysCompletedTasks: pastSevenDaysCompletedTasks 
+  const { pastSevenDaysTotalTasks, pastSevenDaysCompletedTasks } =
+    calculatePastSevenDaysStats();
+  await chrome.storage.sync.set({
+    pastSevenDaysTotalTasks: pastSevenDaysTotalTasks,
+    pastSevenDaysCompletedTasks: pastSevenDaysCompletedTasks,
   });
 }
 
-
 function getDateNDaysAgo(n) {
-    const today = new Date();
-    const pastDate = new Date(today);
-    pastDate.setDate(today.getDate() - n);
-    return pastDate.toDateString();
+  const today = new Date();
+  const pastDate = new Date(today);
+  pastDate.setDate(today.getDate() - n);
+  return pastDate.toDateString();
 }
 
 function calculatePastSevenDaysStats() {
-    let pastSevenDaysTotalTasks = 0;
-    let pastSevenDaysCompletedTasks = 0;
-    
-    // Calculate total and completed tasks for the past 7 days
-    pastSevenDaysData.forEach(day => {
-        pastSevenDaysTotalTasks += day.totalTasks;
-        pastSevenDaysCompletedTasks += day.completedTasks;
-    });
-    
-    return { pastSevenDaysTotalTasks, pastSevenDaysCompletedTasks };
+  let pastSevenDaysTotalTasks = 0;
+  let pastSevenDaysCompletedTasks = 0;
+
+  // Calculate total and completed tasks for the past 7 days
+  pastSevenDaysData.forEach((day) => {
+    pastSevenDaysTotalTasks += day.totalTasks;
+    pastSevenDaysCompletedTasks += day.completedTasks;
+  });
+
+  return { pastSevenDaysTotalTasks, pastSevenDaysCompletedTasks };
 }
 
 function displayPastSevenDaysStats() {
-    chrome.storage.sync.get(["pastSevenDaysTotalTasks", "pastSevenDaysCompletedTasks"], function(data) {
-        const pastSevenDaysTotalTasks = data.pastSevenDaysTotalTasks || 0;
-        const pastSevenDaysCompletedTasks = data.pastSevenDaysCompletedTasks || 0;
+  chrome.storage.sync.get(
+    ["pastSevenDaysTotalTasks", "pastSevenDaysCompletedTasks"],
+    function (data) {
+      const pastSevenDaysTotalTasks = data.pastSevenDaysTotalTasks || 0;
+      const pastSevenDaysCompletedTasks = data.pastSevenDaysCompletedTasks || 0;
 
-        const statsContainer = document.getElementById("past-seven-days-stats");
-        statsContainer.textContent = `User completed ${pastSevenDaysCompletedTasks} tasks out of ${pastSevenDaysTotalTasks} in the past 7 days.`;
-    });
+      const averageCompletedTasksPerDay = pastSevenDaysCompletedTasks / 7;
+
+      const statsContainer = document.getElementById("past-seven-days-stats");
+      statsContainer.innerHTML = `
+        <p>User completed ${pastSevenDaysCompletedTasks} tasks out of ${pastSevenDaysTotalTasks} in the past 7 days.</p>
+        <p>Average completed tasks per day: ${averageCompletedTasksPerDay.toFixed(
+          2
+        )}</p>
+      `;
+    }
+  );
 }
 
 initializePastSevenDaysData();
@@ -252,7 +268,7 @@ function checkAndResetAtMidnight() {
 function reset() {
   updatePastSevenDaysData();
   // Reset actions for Test 1
-  completionMessage.textContent = "Test 1";
+  completionMessage.textContent = "RESET";
   totalTasks = 0;
   completedTasks = 0;
   updateTaskCounter();
@@ -265,8 +281,8 @@ function reset() {
 async function resetAtMidnight() {
   await updatePastSevenDaysData();
   // Reset actions for Test 1
+  completionMessage.textContent = "RESET";
   checkCompletionforStreak();
-  completionMessage.textContent = "Test 1";
   totalTasks = 0;
   completedTasks = 0;
   updateTaskCounter();
@@ -278,4 +294,3 @@ async function resetAtMidnight() {
 
 checkAndResetAtMidnight();
 displayPastSevenDaysStats();
-

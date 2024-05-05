@@ -209,17 +209,33 @@ function calculatePastSevenDaysStats() {
 
 function displayPastSevenDaysStats() {
   chrome.storage.sync.get(
-    ["pastSevenDaysTotalTasks", "pastSevenDaysCompletedTasks"],
+    [
+      "pastSevenDaysTotalTasks",
+      "pastSevenDaysCompletedTasks",
+      "pastSevenDaysData",
+    ],
     function (data) {
       const pastSevenDaysTotalTasks = data.pastSevenDaysTotalTasks || 0;
       const pastSevenDaysCompletedTasks = data.pastSevenDaysCompletedTasks || 0;
+      const pastSevenDaysData = data.pastSevenDaysData || [];
 
-      const averageCompletedTasksPerDay = pastSevenDaysCompletedTasks / 7;
+      let totalCompletedTasks = 0;
+      let daysWithDataCount = 0;
+
+      pastSevenDaysData.forEach((day) => {
+        totalCompletedTasks += day.completedTasks;
+        if (day.totalTasks > 0) {
+          daysWithDataCount++;
+        }
+      });
+
+      const averageCompletedTasksPerDay =
+        daysWithDataCount > 0 ? totalCompletedTasks / daysWithDataCount : 0;
 
       const statsContainer = document.getElementById("past-seven-days-stats");
       statsContainer.innerHTML = `
         <p>User completed ${pastSevenDaysCompletedTasks} tasks out of ${pastSevenDaysTotalTasks} in the past 7 days.</p>
-        <p>Average completed tasks per day: ${averageCompletedTasksPerDay.toFixed(
+        <p>Average completed tasks per day in the past 7 days: ${averageCompletedTasksPerDay.toFixed(
           2
         )}</p>
       `;
@@ -268,7 +284,7 @@ function checkAndResetAtMidnight() {
 function reset() {
   updatePastSevenDaysData();
   // Reset actions for Test 1
-  completionMessage.textContent = "RESET";
+  //completionMessage.textContent = "RESET";
   totalTasks = 0;
   completedTasks = 0;
   updateTaskCounter();
@@ -281,7 +297,7 @@ function reset() {
 async function resetAtMidnight() {
   await updatePastSevenDaysData();
   // Reset actions for Test 1
-  completionMessage.textContent = "RESET";
+  //completionMessage.textContent = "RESET";
   checkCompletionforStreak();
   totalTasks = 0;
   completedTasks = 0;

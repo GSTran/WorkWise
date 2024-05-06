@@ -8,9 +8,19 @@ function requestTimeFromBackground() {
   sendMessageToBackground({ action: 'requestTime' });
 }
 
+var isTracking;
+
 // Display time spent on each website
 document.addEventListener('DOMContentLoaded', function() {
-  //requestTimeFromBackground();
+  requestTimeFromBackground();
+  chrome.runtime.sendMessage({action:'timeTrackOpen'});
+  document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === 'hidden') {
+      chrome.runtime.sendMessage({action:'timeTrackClose'});
+    }
+  });
+
+  chrome.runtime.sendMessage({action:'getTracking'});
 
   var saveButton = document.getElementById('saveButton');
   var loadButton = document.getElementById('loadButton');
@@ -61,28 +71,47 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+var button = document.getElementById('toggleTracking');
 // Handle button click to start or stop tracking
 document.getElementById('toggleTracking').addEventListener('click', function() {
-  var button = document.getElementById('toggleTracking');
   var isTracking = (button.textContent === 'Start Tracking');
   
   if (isTracking) {
     sendMessageToBackground({ action: 'startTracking' });
     button.textContent = 'Stop Tracking';
+    requestTimeFromBackground();
   } else {
     sendMessageToBackground({ action: 'stopTracking' });
     button.textContent = 'Start Tracking';
     requestTimeFromBackground();
+
+    var websiteList = document.getElementById('websiteList');
+    websiteList.innerHTML = '';
+  }
+});
+
+chrome.runtime.onMessage.addListener(function (message) {
+  var action = message.action;
+
+  if(action === 'updateTrackingButton')
+  {
+    const tracking = message.tracking;
+    if(tracking){
+      button.textContent = 'Stop Tracking';
+    }
+  }
+  else if (action==='updateTime'){
+    displayTime(message.timeData, message.tracking);
   }
 });
 
 // Listen for messages from background script
-chrome.runtime.onMessage.addListener(function(message) {
-  console.log("upDateTime message received" + message.tracking);
-  if (message.action === 'updateTime') {
-    displayTime(message.timeData, message.tracking);
-  }
-});
+// chrome.runtime.onMessage.addListener(function(message) {
+//   console.log("upDateTime message received" + message.tracking);
+//   if (message.action === 'updateTime') {
+//     displayTime(message.timeData, message.tracking);
+//   }
+// });
 
 function getBlacklist() {
   return new Promise((resolve, reject) => {
@@ -121,7 +150,10 @@ async function displayTime(timeData, tracking) {
   }
 
   var websiteData = timeData.websiteData;
-  
+  if (websiteData ==null){
+    return;
+  }
+
   // Calculate total time spent on all websites
   websiteData.forEach(function(website) {
     totalTime += website.time;
@@ -140,8 +172,12 @@ async function displayTime(timeData, tracking) {
     var listItem = document.createElement('li');
     listItem.textContent = website.url + ': ' + formatTime(website.time);
     if (!tracking) {
+        listItem.appendChild(document.createElement('br'));
+
+        var portionText = document.createElement('span');
         var proportion = (website.time / totalTime) * 100;
-        listItem.textContent += " Portion: " + proportion.toFixed(2) + "%";
+        portionText.textContent += "Portion: " + proportion.toFixed(2) + "%";
+        listItem.appendChild(portionText);
 
         // Creating a progress bar element
         var progressBar = document.createElement('progress');
@@ -174,7 +210,9 @@ async function displayTime(timeData, tracking) {
 
   //Clear when tracking stops
   if(!tracking){
-    chrome.storage.local.clear();
+    chrome.storage.local.set({ 'websiteData': null }, function() {
+      console.log('Data has been cleared.');
+    });
   }
 }
 

@@ -16,6 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === 'hidden') {
+      chrome.runtime.sendMessage({action:'pomClose'});
+    }
+  });
+
   chrome.runtime.sendMessage({ action: 'pomOpen' });
   chrome.runtime.sendMessage({ action: 'initialize' });
   chrome.runtime.sendMessage({ action: 'buttonStatus' });

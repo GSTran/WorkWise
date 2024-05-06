@@ -1,0 +1,32 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  width: 500px;
+  height: 800px;
+}
+
+/* Centering the "Time Spent on Websites" text */
+h1 {
+  text-align: center;
+}
+
+/* Styling the unordered list */
+#websiteList {
+  border: 2px solid black; /* Black outline */
+  border-radius: 10px; /* Curved corners */
+  padding: 10px; /* Add padding inside the border */
+  margin: 10px; /* Add margin outside the border */
+}
+
+/* Shift elements inside the unordered list to the right */
+#websiteList li {
+  margin-left: 10px; /* Adjust as needed */
+}
+
+/* Styling the button */
+#toggleTracking {
+  margin-top: 10px; /* Add some space between the button and the list */
+}

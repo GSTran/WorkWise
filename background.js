@@ -1,5 +1,7 @@
 // Variable to keep track of tab tracking status
 var trackingEnabled = false;
+//Variable to see if timeTrackingPage is open or not
+var trackingOpen = false; 
 // Variable to store start time for each website
 var startTimeMap = {};
 
@@ -92,7 +94,10 @@ function trackTimeOnWebsite(url, elapsedTime) {
 
 
     // Send the updated website data back to the requesting script
-    sendTimeData();
+    if(trackingOpen){
+      sendTimeData();
+    }
+
     //chrome.runtime.sendMessage({ action: 'updateTime', timeData: websiteDataArray });
   });
 }
@@ -104,16 +109,49 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
 
   if (action === 'startTracking') {
     trackingEnabled = true;
+
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      var currentTab = tabs[0];
+      var url = extractDomain(currentTab.url);
+      var currentTime = new Date().getTime();
+
+      // Store the start time for the current tab
+      startTimeMap[url] = currentTime;
+    });
   } else if (action === 'stopTracking') {
-    trackingEnabled = false;
-    // Clear startTimeMap when tracking is stopped
-    startTimeMap = {};
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      var currentTime = new Date().getTime();
+
+      // If there was a previous tab being tracked, calculate and update its time
+      if (Object.keys(startTimeMap).length > 0) {
+        var previousTabUrl = Object.keys(startTimeMap)[0];
+        var previousStartTime = startTimeMap[previousTabUrl];
+        var elapsedTime = currentTime - previousStartTime;
+        trackTimeOnWebsite(previousTabUrl, elapsedTime);
+        delete startTimeMap[previousTabUrl];
+      }
+      // Clear startTimeMap when tracking is stopped
+      startTimeMap = {};
+
+      trackingEnabled = false;
+    });
   }
   else if (action === 'requestTime') {
     // Respond to the request with the time data
     sendTimeData();
   }
-
+  else if (action === 'timeTrackOpen')
+  {
+    trackingOpen = true; 
+  }
+  else if (action ==='timeTrackClose')
+  {
+    trackingOpen = false; 
+  }
+  else if (action ==='getTracking')
+  {
+    chrome.runtime.sendMessage({action:'updateTrackingButton', tracking:trackingEnabled});
+  }
 });
 
 
@@ -207,20 +245,20 @@ chrome.runtime.onMessage.addListener(function (message) {
   }
 });
 
-// Listener for when a window is removed (closed)
-chrome.windows.onRemoved.addListener((windowId) => {
-  // Retrieve information about the closed window
-  chrome.windows.get(windowId, { populate: false }, (closedWindow) => {
-    if (chrome.runtime.lastError) {
-      //console.error(`Error retrieving window with ID ${windowId}:`, chrome.runtime.lastError);
-      return;
-    }
+// // Listener for when a window is removed (closed)
+// chrome.windows.onRemoved.addListener((windowId) => {
+//   // Retrieve information about the closed window
+//   chrome.windows.get(windowId, { populate: false }, (closedWindow) => {
+//     if (chrome.runtime.lastError) {
+//       //console.error(`Error retrieving window with ID ${windowId}:`, chrome.runtime.lastError);
+//       return;
+//     }
 
-    if (closedWindow && closedWindow.type === 'popup') {
-      pomisOpen = false;
-    }
-  });
-});
+//     if (closedWindow && closedWindow.type === 'popup') {
+//       pomisOpen = false;
+//     }
+//   });
+// });
 
 function updateTimerInStorage(newTimer) {
   chrome.storage.local.set({ timer: newTimer }, () => {
@@ -274,8 +312,8 @@ function startTimer() {
 
   interval = setInterval(async function () {
     timer.remainingTime = getRemainingTime(endTime);
+    await updateTimerInStorage(timer);
     if (pomIsOpen) {
-      await updateTimerInStorage(timer);
       chrome.runtime.sendMessage({ action: 'updateClock' });
     }
 

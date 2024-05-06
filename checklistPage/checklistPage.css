@@ -60,6 +60,8 @@ input {
 #input-box {
   color: white;
   font-size: larger;
+  font-family: sans-serif;
+  font-weight: bold;
 }
 
 #input-box::placeholder {
@@ -68,6 +70,8 @@ input {
 
 #list-container li {
   color: #f9b60e;
+  font-family: sans-serif;
+  font-weight: bold;
 }
 
 button {
@@ -79,6 +83,11 @@ button {
   font-size: 16px;
   cursor: pointer;
   border-radius: 40px;
+}
+
+#add-task-btn {
+  font-weight: bold;
+  font-family: sans-serif;
 }
 
 ul li {

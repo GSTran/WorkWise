@@ -13,22 +13,23 @@ body {
 .container {
   width: 100%;
   min-height: 100%;
-  background: linear-gradient(135deg, #ff6000, #454545);
+  background: linear-gradient(135deg, #2b2a33, #2b2a33);
   padding: 10px;
 }
 
-.checklist {
+/* .checklist {
   width: 100%;
   max-width: 540px;
   background: #fff;
   margin: 100px auto 20px;
   padding: 40px 30px 70px;
   border-radius: 10px;
-}
+} */
 
 .checklist h2 {
-  color: #000;
-  display: flex;
+  color: #f9b60e;
+  /* display: flex; */
+  text-align: center;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -42,7 +43,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #ffe6c7;
+  background: #daa26e;
   border-radius: 30px;
   padding-left: 20px;
   margin-bottom: 25px;
@@ -56,11 +57,24 @@ input {
   padding: 10px;
 }
 
+#input-box {
+  color: white;
+  font-size: larger;
+}
+
+#input-box::placeholder {
+  color: white;
+}
+
+#list-container li {
+  color: #f9b60e;
+}
+
 button {
   border: none;
   outline: none;
   padding: 16px 50px;
-  background: #ffa559;
+  background: #ecbb80;
   color: #fff;
   font-size: 16px;
   cursor: pointer;

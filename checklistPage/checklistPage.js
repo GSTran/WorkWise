@@ -234,10 +234,9 @@ function displayPastSevenDaysStats() {
 
       const statsContainer = document.getElementById("past-seven-days-stats");
       statsContainer.innerHTML = `
-        <p>User completed ${pastSevenDaysCompletedTasks} tasks out of ${pastSevenDaysTotalTasks} in the past 7 days.</p>
-        <p>Average completed tasks per day in the past 7 days: ${averageCompletedTasksPerDay.toFixed(
-          2
-        )}</p>
+        <p>${pastSevenDaysCompletedTasks}/${pastSevenDaysTotalTasks} tasks completed in the past 7 days. Avg tasks/day: ${averageCompletedTasksPerDay.toFixed(
+        2
+      )}</p>
       `;
     }
   );

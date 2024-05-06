@@ -17,21 +17,46 @@ body {
   padding: 10px;
 }
 
-/* .checklist {
+.checklist {
+  /* background-color: #2e2e2e; */
   width: 100%;
   max-width: 540px;
-  background: #fff;
   margin: 100px auto 20px;
   padding: 40px 30px 70px;
   border-radius: 10px;
-} */
+}
 
 .checklist h2 {
+  margin-top: 50;
   color: #f9b60e;
   /* display: flex; */
   text-align: center;
   align-items: center;
   margin-bottom: 20px;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+#ctc {
+  margin-top: 30px;
+  color: #e68a00;
+  text-align: center;
+  font-size: 16px;
+}
+
+#completion-message {
+  margin-top: 30px;
+  color: #e68a00;
+  text-align: center;
+  font-size: 16px;
+}
+
+#streak {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  color: #e68a00;
+  text-align: center;
+  font-size: 16px;
 }
 
 .checklist h2 img {
@@ -136,4 +161,13 @@ ul li span {
 
 ul li span:hover {
   background: #edeef0;
+}
+
+#past-seven-days-stats p {
+  font-size: 16px;
+  color: #e68a00;
+  text-align: center;
+  align-content: center;
+  font-family: sans-serif;
+  font-weight: bold;
 }

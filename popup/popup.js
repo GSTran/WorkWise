@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   var checklistPageButton = document.getElementById("checkListPageButton");
-  
+
   document.addEventListener("visibilitychange", function() {
     if (document.visibilityState === 'hidden') {
       // Popup is closed, do something
@@ -30,9 +30,4 @@ document.addEventListener("DOMContentLoaded", function () {
     // You can do whatever you need to do here, like saving data or cleaning up resources
   });
   
-  var pomodoroButton = document.getElementById("pomodoroButton");
-
-  pomodoroButton.addEventListener("click", function () {
-    chrome.runtime.sendMessage({ action: "pomOpen" });
-  });
 });

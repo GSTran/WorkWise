@@ -194,17 +194,19 @@ async function displayTime(timeData, tracking) {
   //Total Time element
   var listItem = document.createElement('li');
   listItem.textContent = 'Total Time: ' + formatTime(totalTime);
-  websiteList.appendChild(listItem);
-  
+  //websiteList.appendChild(listItem);
+  listItem.appendChild(document.createElement('br'));
+
   //Time Off Task element
-  var listItem = document.createElement('li');
+  var offTaskItem = document.createElement('span');
   var propOffTask = timeOffTask/totalTime*100;
-  listItem.textContent = 'Time off Task: ' + propOffTask.toFixed(2) + "%";
+  offTaskItem.textContent = 'Time off Task: ' + propOffTask.toFixed(2) + "%";
   if(!tracking){
     var progressBar = document.createElement('progress');
     progressBar.value = propOffTask;
     progressBar.max = 100;
-    listItem.appendChild(progressBar);
+    offTaskItem.appendChild(progressBar);
+    listItem.appendChild(offTaskItem);
   }
   websiteList.appendChild(listItem);
 

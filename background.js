@@ -299,7 +299,9 @@ async function switchMode(mode) {
   };
   await updateTimerInStorage(timer);
 
-  chrome.runtime.sendMessage({ action: 'contSwitchMode', mode });
+  if(pomIsOpen){
+    chrome.runtime.sendMessage({ action: 'contSwitchMode', mode });
+  }
 };
 
 function startTimer() {

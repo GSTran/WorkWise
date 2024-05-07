@@ -234,7 +234,7 @@ function displayPastSevenDaysStats() {
 
       const statsContainer = document.getElementById("past-seven-days-stats");
       statsContainer.innerHTML = `
-        <p>${pastSevenDaysCompletedTasks}/${pastSevenDaysTotalTasks} tasks completed in the past 7 days. Avg tasks/day: ${averageCompletedTasksPerDay.toFixed(
+        <p>${pastSevenDaysCompletedTasks}/${pastSevenDaysTotalTasks} tasks completed in the past 7 days. Avg tasks/day (only active day where user used the checklist): ${averageCompletedTasksPerDay.toFixed(
         2
       )}</p>
       `;

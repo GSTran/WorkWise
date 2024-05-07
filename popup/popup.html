@@ -22,26 +22,41 @@
     </div>
     <div class="spacer" />
     <div class="buttonSpacing">
-      <a href="../checklistPage/checklistPage.html">
-        <button class="navbarButtons">
-          <img src="../img/checklisticon.png" class="navButtonImg">
-        </button>
-      </a>
-      <a href="../pomodoro/pomodoro.html">
-        <button class="navbarButtons">
-          <img src="../img/pomodoroicon.png" class="navButtonImg">
-        </button>
-      </a>
     </div>
   </header>
-
-  <div class="container">
-    <a href="../timeTrackingPage/timeTrackingPage.html">
-      <button class="button" id="timeTrackButton">Track Websites</button>
+  <div class="dashboardDiv">
+    <h1 class="dashboardText">Dashboard</h1>
+  </div>
+  <div class="dashboardElements">
+    <a style="text-decoration: none;" href="../timeTrackingPage/timeTrackingPage.html">
+      <button class="trackButton" id="timeTrackButton">
+        <img src="../img/TimeTrackerLogo.png" class="navButtonImg">
+        <h1 class="dashButtonText">Website Tracking</h1>
+      </button>
     </a>
-
-    <!-- <button class="button" id="websiteTrackingButton"> Track Websites</button> -->
-    <script src="popup.js"></script>
+    <a style="text-decoration: none;" href="../checklistPage/checklistPage.html">
+      <button class="trackButton">
+        <img src="../img/checklisticon.png" class="navButtonImg">
+        <h1 class="dashButtonText">Checklist</h1>
+      </button>
+    </a>
+    <a style="text-decoration: none;" href="../pomodoro/pomodoro.html">
+      <button class="trackButton">
+        <img src="../img/pomodoroicon.png" class="navButtonImg">
+        <h1 class="dashButtonText">Pomodoro Timer</h1>
+      </button>
+    </a>
+  </div>
+  <div class="underDashButtonsDiv">
+    <div class="quotePill">
+      <h1 class="quoteText" id="quote"></h1>
+      <h4 class="citeText">Inspirational quotes provided by
+        <a class="citeLink" href="https://zenquotes.io/" target="_blank">ZenQuotes API</a>
+      </h4>
+    </div>
+  </div>
+  <script src="../quote/quote.js"></script>
+  <script src="popup.js"></script>
 </body>
 
 </html>

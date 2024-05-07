@@ -1,21 +1,97 @@
 * {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
 
 body {
   width: 500px;
   height: 500px;
+  background: linear-gradient(135deg, #2b2a33, #2b2a33);
 }
 
 .container {
   margin: 20px 15px;
 }
 
-.button {
-  margin-top: 20px;
-  width: 110px;
-  height: 30px;
-
-  font-size: 12px;
+.quoteText {
+  font-size: 16pt;
+  text-align: center;
+  padding: 10px;
 }
+
+.citeText {
+  font-size: 8pt;
+  text-align: center;
+  padding: 10px;
+}
+
+.citeLink {
+  color: #F9B60E;
+}
+
+.quotePill {
+  border: 3px black solid;
+  border-radius: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.dashboardText {
+  color: #F9B60E;
+  font-size: 16pt;
+  padding: 10px;
+}
+
+.dashboardDiv {
+  border-bottom: 2px black solid;
+  text-align: center;
+  margin-top: 12px;
+  width: 70vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dashboardElementsDiv {
+  display: flex;
+  align-items: center;
+}
+
+.dashboardElements {
+  display: flex;
+  flex-direction: column;
+}
+
+.trackButton {
+  background-color: transparent;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.dashButtonText {
+  font-size: 18px;
+  color: #F9B60E;
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+.trackButton:hover {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+.underDashButtonsDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+
+

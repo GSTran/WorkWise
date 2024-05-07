@@ -8,14 +8,14 @@
  * https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
  *
  */
- * {
+* {
   margin: 0px;
   padding: 0px;
 }
 
 body {
   width: 500px;
-  height: 800px;
+  height: 400px;
 }
 
 .container {
@@ -35,7 +35,7 @@ html {
 }
 
 :root {
-  --pomodoro: hsl(223, 25%, 40%);
+  --pomodoro: #2b2a33;
   --shortBreak: hsl(48, 23%, 40%);
   --longBreak: hsl(105, 16%, 40%);
 }
@@ -43,8 +43,8 @@ html {
 body {
   background-color: var(--pomodoro);
   transition: background-color 1s ease;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   user-select: none;
   width: 500px;
   height: 800px;
@@ -90,8 +90,8 @@ progress::-webkit-progress-value {
   height: 28px;
   cursor: pointer;
   box-shadow: none;
-  font-weight: 300;
-  color: #fff;
+  font-weight: bold;
+  color: #f9b60e;
   border: 1px solid transparent;
   margin: 0px;
   border-radius: 4px;
@@ -100,24 +100,24 @@ progress::-webkit-progress-value {
 }
 
 .mode-button.active {
-  border-color: #fff;
+  border-color: #565656;
 }
 
 .main-button {
   cursor: pointer;
-  box-shadow: rgb(235, 235, 235) 0px 6px 0px;
+  box-shadow: #565656;
   font-size: 22px;
   height: 55px;
   text-transform: uppercase;
-  color: hsl(175, 26%, 41%);
+  color: #e68a00;
   font-weight: bold;
   width: 200px;
-  background-color: white;
+  background-color: #ecbb80;
   border-width: initial;
   border-style: none;
   margin: 20px 0px 0px;
   padding: 0px 12px;
-  border-radius: 4px;
+  border-radius: 10px;
   transition: color 0.5s ease-in-out 0s;
 }
 
@@ -136,8 +136,8 @@ button:active {
   display: none;
 }
 
- /* The switch - the box around the slider */
- .switch {
+/* The switch - the box around the slider */
+.switch {
   position: relative;
   display: inline-block;
   width: 60px;
@@ -160,8 +160,8 @@ button:active {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -172,16 +172,16 @@ button:active {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #2196f3;
 }
 
 input:checked + .slider:before {
@@ -197,7 +197,7 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
-} 
+}
 
 @media screen and (max-width: 550px) {
   .clock {
@@ -205,13 +205,40 @@ input:checked + .slider:before {
   }
 }
 
-.bottom{
+.bottom {
   position: absolute;
   bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 12px;
   height: 28px;
   cursor: pointer;
   font-weight: 300;
   color: #fff;
   background: none;
+}
+
+.button-bottom {
+  color: #f9b60e;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #ffffff;
+}
+
+.switch {
+  margin-top: 500px;
+}
+
+.title {
+  text-align: center;
+  margin-top: 50px;
+  color: #f9b60e;
+}
+
+.clock span {
+  color: #f9b60e; /* Set the color of clock elements */
 }

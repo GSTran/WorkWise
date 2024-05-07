@@ -7,7 +7,7 @@
 
 body {
   width: 500px;
-  height: 800px;
+  height: 400px;
 }
 
 .container {
@@ -17,17 +17,18 @@ body {
   padding: 10px;
 }
 
-/* .checklist {
-  background-color: #2e2e2e;
+.checklist {
+  background-color: #00000000; /* Transparent background */
   width: 100%;
-  max-width: 540px;
-  margin: 100px auto 20px;
-  padding: 40px 30px 70px;
+  max-width: 440px;
+  margin: 10px auto; /* Adjust margin */
+  padding: 20px;
   border-radius: 10px;
-} */
+  border: 2px solid #f9b60e; /* Add border */
+}
 
-.checklist h2 {
-  margin-top: 50px;
+.checklist h1 {
+  margin-top: 0px;
   color: #f9b60e;
   /* display: flex; */
   text-align: center;
@@ -172,7 +173,13 @@ ul li span:hover {
 }
 
 .historical-stats {
-  margin-top: 30px;
+  background-color: #00000000; /* Transparent background */
+  width: 100%;
+  max-width: 440px;
+  margin: 10px auto; /* Adjust margin */
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #f9b60e; /* Add border */
 }
 .historical-stats h2 {
   color: #f9b60e;

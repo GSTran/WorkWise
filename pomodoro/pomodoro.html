@@ -9,6 +9,7 @@
   </head>
   <body>
     <main>
+      <h1 class="title">Pomodoro Timer</h1>
       <progress id="js-progress" value="0"></progress>
       <div class="progress-bar"></div>
       <div class="timer">
@@ -45,31 +46,34 @@
         </button>
       </div>
       <div class="bottom">
-        <button class="button" id="settingsButton">Settings</button>
-        <button class="button" id="resetButton">Reset Timer</button>
-        <label class="switch" >
-          <input type="checkbox" id="pomoNotifyToggle">
-          <span class="slider round"></span>
-        </label>
-          <div id="settingsMenu" class="hidden">
-          Pomodoro 
-          <input type="text" id="pomodoroInput">
-          <br>
-          Short Break 
-          <input type="text" id="shortBreakInput">
-          <br>
+        <button class="button-bottom" id="resetButton">Reset Timer</button>
+        <button class="button-bottom" id="settingsButton">Settings</button>
+        <div id="settingsMenu" class="hidden">
+          Pomodoro
+          <input type="text" id="pomodoroInput" />
+          <br />
+          Short Break
+          <input type="text" id="shortBreakInput" />
+          <br />
           Long Break
-          <input type ="text" id="longBreakInput">
-          <br>
+          <input type="text" id="longBreakInput" />
+          <br />
           Long Break Interval
-          <input type ="text" id="longBreakInterval">
-          <br>
+          <input type="text" id="longBreakInterval" />
+          <br />
           <button class="button" id="changeTimeButton">Change Time</button>
         </div>
       </div>
+      <label class="switch">
+        <input type="checkbox" id="pomoNotifyToggle" />
+        <span class="slider round"></span>
+      </label>
     </main>
     <div class="hidden">
-      <audio src="../PomodoroTimer/backtowork.mp3" data-sound="pomodoro"></audio>
+      <audio
+        src="../PomodoroTimer/backtowork.mp3"
+        data-sound="pomodoro"
+      ></audio>
       <audio src="../PomodoroTimer/break.mp3" data-sound="shortBreak"></audio>
       <audio src="../PomodoroTimer/break.mp3" data-sound="longBreak"></audio>
     </div>

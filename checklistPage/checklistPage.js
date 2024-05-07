@@ -283,7 +283,7 @@ function checkAndResetAtMidnight() {
 function reset() {
   updatePastSevenDaysData();
   // Reset actions for Test 1
-  //completionMessage.textContent = "RESET";
+  completionMessage.textContent = "";
   totalTasks = 0;
   completedTasks = 0;
   updateTaskCounter();
@@ -296,7 +296,7 @@ function reset() {
 async function resetAtMidnight() {
   await updatePastSevenDaysData();
   // Reset actions for Test 1
-  //completionMessage.textContent = "RESET";
+  completionMessage.textContent = "";
   checkCompletionforStreak();
   totalTasks = 0;
   completedTasks = 0;

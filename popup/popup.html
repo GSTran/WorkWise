@@ -1,29 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="popup.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h1 class="title">Work Wise</h1>
-      <a href="../quote/quote.html">
-        <button class="button">Quote of the Day</button>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="popup.css" />
+  <link rel="stylesheet" href="../navbar/navbar.css" />
+</head>
+
+<body>
+  <header class="navbar">
+    <div class="workWiseDiv">
+      <a href="../popup/popup.html">
+        <button class="navbarButtons">
+          <img src="../img/Bee Logo.png" class="navButtonImg">
+        </button>
       </a>
+      <h1 class="workWiseTitle">Work Wise</h1>
+    </div>
+    <div class="spacer" />
+    <div class="buttonSpacing">
       <a href="../checklistPage/checklistPage.html">
-        <button class="button">Checklist</button>
+        <button class="navbarButtons">
+          <img src="../img/checklisticon.png" class="navButtonImg">
+        </button>
       </a>
       <a href="../pomodoro/pomodoro.html">
-      <button class="button" id="pomodoroButton">Pomodoro Timer</button>
+        <button class="navbarButtons">
+          <img src="../img/pomodoroicon.png" class="navButtonImg">
+        </button>
       </a>
-      <a href="../timeTrackingPage/timeTrackingPage.html">
-        <button class="button" id="timeTrackButton">Track Websites</button>
-      </a>
+    </div>
+  </header>
 
-      <!-- <button class="button" id="websiteTrackingButton"> Track Websites</button> -->
+  <div class="container">
+    <a href="../timeTrackingPage/timeTrackingPage.html">
+      <button class="button" id="timeTrackButton">Track Websites</button>
+    </a>
+
+    <!-- <button class="button" id="websiteTrackingButton"> Track Websites</button> -->
     <script src="popup.js"></script>
-  </body>
+</body>
+
 </html>

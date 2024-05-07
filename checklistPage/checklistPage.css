@@ -17,17 +17,17 @@ body {
   padding: 10px;
 }
 
-.checklist {
-  /* background-color: #2e2e2e; */
+/* .checklist {
+  background-color: #2e2e2e;
   width: 100%;
   max-width: 540px;
   margin: 100px auto 20px;
   padding: 40px 30px 70px;
   border-radius: 10px;
-}
+} */
 
 .checklist h2 {
-  margin-top: 50;
+  margin-top: 50px;
   color: #f9b60e;
   /* display: flex; */
   text-align: center;
@@ -166,8 +166,20 @@ ul li span:hover {
 #past-seven-days-stats p {
   font-size: 16px;
   color: #e68a00;
+  font-family: sans-serif;
+  font-weight: bold;
   text-align: center;
-  align-content: center;
+}
+
+.historical-stats {
+  margin-top: 30px;
+}
+.historical-stats h2 {
+  color: #f9b60e;
+  /* display: flex; */
+  text-align: center;
+  align-items: center;
+  margin-bottom: 20px;
   font-family: sans-serif;
   font-weight: bold;
 }

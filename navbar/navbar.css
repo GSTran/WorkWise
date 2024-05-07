@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+.navbar {
+  display: flex;
+  border-bottom: 1px solid black;
+  background: linear-gradient(135deg, #2b2a33, #2b2a33);
+}
+
+.navbarButtons {
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.navButtonImg:hover {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+.navButtonImg {
+  width: 30px;
+  height: auto;
+}
+
+.buttonSpacing {
+  display: flex;
+  justify-content: right;
+}
+
+.spacer {
+  width: 300px;
+}
+
+.workWiseDiv {
+  display: flex;
+  align-items: center;
+}
+
+.workWiseTitle {
+  color: #F9B60E;
+}

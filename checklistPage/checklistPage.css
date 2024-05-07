@@ -7,7 +7,7 @@
 
 body {
   width: 500px;
-  height: 400px;
+  height: 500px;
 }
 
 .container {
@@ -72,6 +72,7 @@ body {
   background: #daa26e;
   border-radius: 30px;
   padding-left: 20px;
+  margin-top: 40px;
   margin-bottom: 25px;
 }
 
@@ -189,4 +190,9 @@ ul li span:hover {
   margin-bottom: 20px;
   font-family: sans-serif;
   font-weight: bold;
+}
+
+bottom.notification-text {
+  color: #f9b60e;
+  font-family: sans-serif;
 }

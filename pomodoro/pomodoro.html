@@ -37,7 +37,7 @@
       <progress id="js-progress" value="0"></progress>
       <div class="progress-bar"></div>
       <div class="timer">
-        <div class="button-group mode-buttons" id="js-mode-buttons">
+        <div class="button-group-mode-buttons" id="js-mode-buttons">
           <button
             data-mode="pomodoro"
             class="button active mode-button"
@@ -72,6 +72,11 @@
       <div class="bottom">
         <button class="button-bottom" id="resetButton">Reset Timer</button>
         <button class="button-bottom" id="settingsButton">Settings</button>
+        <span class="notification-text">Notification Toggle</span>
+        <label class="switch">
+          <input type="checkbox" id="pomoNotifyToggle" />
+          <span class="slider round"></span>
+        </label>
         <div id="settingsMenu" class="hidden">
           Pomodoro
           <input type="text" id="pomodoroInput" />
@@ -88,10 +93,6 @@
           <button class="button" id="changeTimeButton">Change Time</button>
         </div>
       </div>
-      <label class="switch">
-        <input type="checkbox" id="pomoNotifyToggle" />
-        <span class="slider round"></span>
-      </label>
     </main>
     <div class="hidden">
       <audio

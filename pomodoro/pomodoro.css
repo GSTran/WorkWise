@@ -15,7 +15,7 @@
 
 body {
   width: 500px;
-  height: 400px;
+  height: 800px;
 }
 
 .container {
@@ -47,7 +47,7 @@ body {
     Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   user-select: none;
   width: 500px;
-  height: 400px;
+  height: 700px;
 }
 
 progress {
@@ -142,6 +142,10 @@ button:active {
   display: inline-block;
   width: 60px;
   height: 34px;
+  bottom: 10px;
+  text-align: center;
+  margin-top: 15px;
+  left: 7px;
 }
 
 /* Hide default HTML checkbox */
@@ -216,6 +220,7 @@ input:checked + .slider:before {
   font-weight: 300;
   color: #fff;
   background: none;
+  margin-left: 23px;
 }
 
 .button-bottom {
@@ -231,13 +236,13 @@ input:checked + .slider:before {
   background-color: #ffffff;
 }
 
-.switch {
-  margin-top: 500px;
-}
+/* .switch {
+  margin-top: 400px;
+} */
 
 .title {
   text-align: center;
-  margin-top: 50px;
+  margin-top: 40px;
   color: #f9b60e;
 }
 
@@ -248,4 +253,17 @@ input:checked + .slider:before {
 #js-progress {
   margin-top: 55px;
   position: absolute;
+}
+
+.button-group-mode-buttons {
+  margin-top: 50px;
+  display: flex;
+}
+
+.button-group-mode-buttons .button {
+  font-size: 15px;
+}
+
+.notification-text {
+  margin-top: 40px; /* Adjust this value as needed */
 }

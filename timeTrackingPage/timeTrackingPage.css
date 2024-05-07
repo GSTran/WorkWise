@@ -6,16 +6,19 @@
 body {
   width: 500px;
   height: 800px;
+  background-color: #2b2a33;
+  color:#ECBB80;
 }
 
 /* Centering the "Time Spent on Websites" text */
 h1 {
   text-align: center;
+  color: #F9B60E;
 }
 
 /* Styling the unordered list */
 #websiteList {
-  border: 2px solid black; /* Black outline */
+  border: 2px solid #DAA26E; /*outline */
   border-radius: 10px; /* Curved corners */
   padding: 10px; /* Add padding inside the border */
   margin: 10px; /* Add margin outside the border */
@@ -30,3 +33,32 @@ h1 {
 #toggleTracking {
   margin-top: 10px; /* Add some space between the button and the list */
 }
+
+button{
+  color: #f9b60e;
+  font-weight: bold;
+  border: 2px solid black;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 10px 10px; /* Adjust padding as needed */
+}
+
+/* Styling the progress bars */
+progress {
+  width: 100%;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #DAA26E; /* Fallback color */
+}
+
+/* Styling the progress bar background */
+progress::-webkit-progress-bar {
+  background-color: #FFFFFF; /* For WebKit browsers */
+  border-radius: 10px;
+}
+/* Styling the progress value (fill) */
+progress::-webkit-progress-value {
+  background-color: #F9B60E; /* For WebKit browsers */
+  border-radius: 10px;
+}
+

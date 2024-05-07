@@ -181,11 +181,11 @@ button:active {
 }
 
 input:checked + .slider {
-  background-color: #2196f3;
+  background-color: #f9b60e;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196f3;
+  box-shadow: 0 0 1px #f9b60e;
 }
 
 input:checked + .slider:before {
@@ -266,4 +266,8 @@ input:checked + .slider:before {
 
 .notification-text {
   margin-top: 40px; /* Adjust this value as needed */
+  font-family: "Poppins", sans-serif;
+  font-size: 10pt;
+  font-weight: bold;
+  color: #f9b60e;
 }

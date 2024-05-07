@@ -1,52 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Website Time Tracker</title>
-    <link rel="stylesheet" href="timeTrackingPage.css" />
-    <link rel="stylesheet" href="../navbar/navbar.css" />
-  </head>
-  <body>
-    <header class="navbar">
-      <div class="workWiseDiv">
-        <a href="../popup/popup.html">
-          <button class="navbarButtons">
-            <img src="../img/Bee Logo.png" class="navButtonImg" />
-          </button>
-        </a>
-        <h1 class="workWiseTitle">Work Wise</h1>
-      </div>
-      <div class="spacer" />
-      <div class="buttonSpacing">
-        <a href="../checklistPage/checklistPage.html">
-          <button class="navbarButtons">
-            <img src="../img/checklisticon.png" class="navButtonImg" />
-          </button>
-        </a>
-        <a href="../pomodoro/pomodoro.html">
-          <button class="navbarButtons">
-            <img src="../img/pomodoroicon.png" class="navButtonImg" />
-          </button>
-        </a>
-        <a href="../timeTrackingPage/timeTrackingPage.html">
-          <button class="navbarButtons">
-            <img src="../img/TimeTrackerLogo.png" class="navButtonImg" />
-          </button>
-        </a>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <title>Website Time Tracker</title>
+  <link rel="stylesheet" href="timeTrackingPage.css" />
+  <link rel="stylesheet" href="../navbar/navbar.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="workWiseDiv">
+      <a href="../popup/popup.html">
+        <button class="navbarButtons">
+          <img src="../img/Bee Logo.png" class="navButtonImg">
+        </button>
+      </a>
+      <h1 class="workWiseTitle">Work Wise</h1>
+    </div>
+    <div class="spacer" />
+    <div class="buttonSpacing">
+      <a href="../checklistPage/checklistPage.html">
+        <button class="navbarButtons">
+          <img src="../img/checklisticon.png" class="navButtonImg">
+        </button>
+      </a>
+      <a href="../pomodoro/pomodoro.html">
+        <button class="navbarButtons">
+          <img src="../img/pomodoroicon.png" class="navButtonImg">
+        </button>
+      </a>
+    </div>
+  </header>
+  
+  <h1>Time Spent on Websites</h1>
+  <ul id="websiteList"></ul>
+  <button id="toggleTracking">Start Tracking</button>
+  <br>
+  <h1>Storage Test</h1>
+  <button id="saveButton">Save Data</button>
+  <button id="loadButton">Load Data</button>
+  <button id="getData">Get Data</button>
+  <button id="clearData">Clear Data</button>
 
-    <h1>Time Spent on Websites</h1>
-    <ul id="websiteList"></ul>
-    <button id="toggleTracking">Start Tracking</button>
-    <br />
-    <h1>Storage Test</h1>
-    <button id="saveButton">Save Data</button>
-    <button id="loadButton">Load Data</button>
-    <button id="getData">Get Data</button>
-    <button id="clearData">Clear Data</button>
-
-    <script src="timeTrackingPage.js"></script>
-  </body>
+  <script src="timeTrackingPage.js"></script>
+</body>
 </html>

@@ -1,62 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="../navbar/navbar.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <link rel="stylesheet" href="popup.css" />
-  <link rel="stylesheet" href="../navbar/navbar.css" />
-</head>
-
-<body>
-  <header class="navbar">
-    <div class="workWiseDiv">
-      <a href="../popup/popup.html">
-        <button class="navbarButtons">
-          <img src="../img/Bee Logo.png" class="navButtonImg">
+  <body>
+    <header class="navbar">
+      <div class="workWiseDiv">
+        <a href="../popup/popup.html">
+          <button class="navbarButtons">
+            <img src="../img/Bee Logo.png" class="navButtonImg" />
+          </button>
+        </a>
+        <h1 class="workWiseTitle">Work Wise</h1>
+      </div>
+      <div class="spacer" />
+      <div class="buttonSpacing"></div>
+    </header>
+    <div class="dashboardDiv">
+      <h1 class="dashboardText">Dashboard</h1>
+    </div>
+    <div class="dashboardElements">
+      <a
+        style="text-decoration: none"
+        href="../timeTrackingPage/timeTrackingPage.html"
+      >
+        <button class="trackButton" id="timeTrackButton">
+          <img src="../img/TimeTrackerLogo.png" class="navButtonImg" />
+          <h1 class="dashButtonText">Website Tracking</h1>
         </button>
       </a>
-      <h1 class="workWiseTitle">Work Wise</h1>
+      <a
+        style="text-decoration: none"
+        href="../checklistPage/checklistPage.html"
+      >
+        <button class="trackButton">
+          <img src="../img/checklisticon.png" class="navButtonImg" />
+          <h1 class="dashButtonText">Checklist</h1>
+        </button>
+      </a>
+      <a style="text-decoration: none" href="../pomodoro/pomodoro.html">
+        <button class="trackButton">
+          <img src="../img/pomodoroicon.png" class="navButtonImg" />
+          <h1 class="dashButtonText">Pomodoro Timer</h1>
+        </button>
+      </a>
+      <a style="text-decoration: none" href="../blackList/blackList.html">
+        <button class="trackButton" id="blackListBtn">
+          <img src="../img/pomodoroicon.png" class="navButtonImg" />
+          <h1 class="dashButtonText">BlackList</h1>
+        </button>
+      </a>
     </div>
-    <div class="spacer" />
-    <div class="buttonSpacing">
+    <div class="underDashButtonsDiv">
+      <div class="quotePill">
+        <h1 class="quoteText" id="quote"></h1>
+        <h4 class="citeText">
+          Inspirational quotes provided by
+          <a class="citeLink" href="https://zenquotes.io/" target="_blank"
+            >ZenQuotes API</a
+          >
+        </h4>
+      </div>
     </div>
-  </header>
-  <div class="dashboardDiv">
-    <h1 class="dashboardText">Dashboard</h1>
-  </div>
-  <div class="dashboardElements">
-    <a style="text-decoration: none;" href="../timeTrackingPage/timeTrackingPage.html">
-      <button class="trackButton" id="timeTrackButton">
-        <img src="../img/TimeTrackerLogo.png" class="navButtonImg">
-        <h1 class="dashButtonText">Website Tracking</h1>
-      </button>
-    </a>
-    <a style="text-decoration: none;" href="../checklistPage/checklistPage.html">
-      <button class="trackButton">
-        <img src="../img/checklisticon.png" class="navButtonImg">
-        <h1 class="dashButtonText">Checklist</h1>
-      </button>
-    </a>
-    <a style="text-decoration: none;" href="../pomodoro/pomodoro.html">
-      <button class="trackButton">
-        <img src="../img/pomodoroicon.png" class="navButtonImg">
-        <h1 class="dashButtonText">Pomodoro Timer</h1>
-      </button>
-    </a>
-  </div>
-  <div class="underDashButtonsDiv">
-    <div class="quotePill">
-      <h1 class="quoteText" id="quote"></h1>
-      <h4 class="citeText">Inspirational quotes provided by
-        <a class="citeLink" href="https://zenquotes.io/" target="_blank">ZenQuotes API</a>
-      </h4>
-    </div>
-  </div>
-  <script src="../quote/quote.js"></script>
-  <script src="popup.js"></script>
-</body>
-
+    <script src="../quote/quote.js"></script>
+    <script src="popup.js"></script>
+  </body>
 </html>

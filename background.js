@@ -1,7 +1,7 @@
 // Variable to keep track of tab tracking status
 var trackingEnabled = false;
 //Variable to see if timeTrackingPage is open or not
-var trackingOpen = false; 
+var trackingOpen = false;
 // Variable to store start time for each website
 var startTimeMap = {};
 
@@ -33,12 +33,12 @@ function extractDomain(url) {
   var domain;
   // Find & remove protocol (http, ftp, etc.) and get domain
   if (url.indexOf("://") > -1) {
-    domain = url.split('/')[2];
+    domain = url.split("/")[2];
   } else {
-    domain = url.split('/')[0];
+    domain = url.split("/")[0];
   }
   // Find & remove port number
-  domain = domain.split(':')[0];
+  domain = domain.split(":")[0];
   return domain;
 }
 
@@ -58,7 +58,7 @@ function extractDomain(url) {
 // }
 
 function trackTimeOnWebsite(url, elapsedTime) {
-  var key = 'websiteData';
+  var key = "websiteData";
 
   // Retrieve stored time for all websites
   chrome.storage.local.get(key, function (data) {
@@ -92,9 +92,8 @@ function trackTimeOnWebsite(url, elapsedTime) {
     });
     //chrome.storage.local.get(console.log);
 
-
     // Send the updated website data back to the requesting script
-    if(trackingOpen){
+    if (trackingOpen) {
       sendTimeData();
     }
 
@@ -102,12 +101,11 @@ function trackTimeOnWebsite(url, elapsedTime) {
   });
 }
 
-
 // Listen for messages from popup for website tracking
 chrome.runtime.onMessage.addListener(function (message, sender) {
   var action = message.action;
 
-  if (action === 'startTracking') {
+  if (action === "startTracking") {
     trackingEnabled = true;
 
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -118,7 +116,7 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
       // Store the start time for the current tab
       startTimeMap[url] = currentTime;
     });
-  } else if (action === 'stopTracking') {
+  } else if (action === "stopTracking") {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       var currentTime = new Date().getTime();
 
@@ -135,35 +133,33 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
 
       trackingEnabled = false;
     });
-  }
-  else if (action === 'requestTime') {
+  } else if (action === "requestTime") {
     // Respond to the request with the time data
     sendTimeData();
-  }
-  else if (action === 'timeTrackOpen')
-  {
-    trackingOpen = true; 
-  }
-  else if (action ==='timeTrackClose')
-  {
-    trackingOpen = false; 
-  }
-  else if (action ==='getTracking')
-  {
-    chrome.runtime.sendMessage({action:'updateTrackingButton', tracking:trackingEnabled});
+  } else if (action === "timeTrackOpen") {
+    trackingOpen = true;
+  } else if (action === "timeTrackClose") {
+    trackingOpen = false;
+  } else if (action === "getTracking") {
+    chrome.runtime.sendMessage({
+      action: "updateTrackingButton",
+      tracking: trackingEnabled,
+    });
   }
 });
-
 
 // Function to send time data to the requesting script
 function sendTimeData() {
   // Retrieve all time data from storage
-  chrome.storage.local.get('websiteData', function (data) {
+  chrome.storage.local.get("websiteData", function (data) {
     // Send the time data back to the requesting script
-    chrome.runtime.sendMessage({ action: 'updateTime', timeData: data, tracking: trackingEnabled });
+    chrome.runtime.sendMessage({
+      action: "updateTime",
+      timeData: data,
+      tracking: trackingEnabled,
+    });
   });
 }
-
 
 //CODE FOR POMODORO TIMER
 
@@ -185,48 +181,37 @@ var timerRunning = false;
 //Listen for messages from popup for pomodoro timer
 chrome.runtime.onMessage.addListener(function (message) {
   var action = message.action;
-  if (action === 'startTimer') {
+  if (action === "startTimer") {
     startTimer();
-  }
-  else if (action === 'stopTimer') {
+  } else if (action === "stopTimer") {
     stopTimer();
-  }
-  else if (action === 'resetTimer') {
+  } else if (action === "resetTimer") {
     stopTimer();
     timer.sessions = 0;
-    switchMode('pomodoro');
-  }
-  else if (action === 'pomOpen') {
+    switchMode("pomodoro");
+  } else if (action === "pomOpen") {
     pomIsOpen = true;
-  }
-  else if (action === 'pomClose') {
+  } else if (action === "pomClose") {
     pomIsOpen = false;
-  }
-  else if (action === 'buttonStatus') {
+  } else if (action === "buttonStatus") {
     if (timerRunning) {
-      chrome.runtime.sendMessage({ action: 'mainButtonOn' });
+      chrome.runtime.sendMessage({ action: "mainButtonOn" });
+    } else {
+      chrome.runtime.sendMessage({ action: "mainButtonOff" });
     }
-    else {
-      chrome.runtime.sendMessage({ action: 'mainButtonOff' });
-    }
-  }
-  else if (action === 'switchMode') {
+  } else if (action === "switchMode") {
     switchMode(message.mode);
-  }
-  else if (action === 'getMode') {
-    chrome.runtime.sendMessage({ action: 'getMode', mode: timer.mode });
-  }
-  else if (action === 'initialize') {
+  } else if (action === "getMode") {
+    chrome.runtime.sendMessage({ action: "getMode", mode: timer.mode });
+  } else if (action === "initialize") {
     if (firstTime) {
-      switchMode('pomodoro');
+      switchMode("pomodoro");
       firstTime = false;
+    } else {
+      chrome.runtime.sendMessage({ action: "updateClock" });
+      chrome.runtime.sendMessage({ action: "setProgress" });
     }
-    else {
-      chrome.runtime.sendMessage({ action: 'updateClock' });
-      chrome.runtime.sendMessage({ action: 'setProgress' });
-    }
-  }
-  else if (action === 'updateTime') {
+  } else if (action === "updateTime") {
     stopTimer();
     timer.pomodoro = message.pomodoro;
     timer.shortBreak = message.shortBreak;
@@ -235,8 +220,7 @@ chrome.runtime.onMessage.addListener(function (message) {
     var longBreakInterval = message.longBreakInterval;
     if (longBreakInterval <= 0) {
       timer.longBreakInterval = 1;
-    }
-    else {
+    } else {
       timer.longBreakInterval = longBreakInterval;
     }
 
@@ -266,8 +250,7 @@ function updateTimerInStorage(newTimer) {
   });
 }
 
-
-//Source: https://stackoverflow.com/a/70402480 
+//Source: https://stackoverflow.com/a/70402480
 /**
  * Plays audio files from extension service workers
  * @param {string} source - path of the audio file
@@ -276,16 +259,16 @@ function updateTimerInStorage(newTimer) {
 async function playSound(source) {
   await createOffscreen();
   //console.log(chrome.offscreen.hasDocument());
-  await chrome.runtime.sendMessage({ action: 'play', mode: source });
+  await chrome.runtime.sendMessage({ action: "play", mode: source });
 }
 
 // Create the offscreen document if it doesn't already exist
 async function createOffscreen() {
   if (await chrome.offscreen.hasDocument()) return;
   await chrome.offscreen.createDocument({
-    url: './pomodoro/pomodoroOffscreen.html',
-    reasons: ['AUDIO_PLAYBACK'],
-    justification: 'playing audio'
+    url: "./pomodoro/pomodoroOffscreen.html",
+    reasons: ["AUDIO_PLAYBACK"],
+    justification: "playing audio",
   });
   //console.log("offscreen doc created");
 }
@@ -299,10 +282,10 @@ async function switchMode(mode) {
   };
   await updateTimerInStorage(timer);
 
-  if(pomIsOpen){
-    chrome.runtime.sendMessage({ action: 'contSwitchMode', mode });
+  if (pomIsOpen) {
+    chrome.runtime.sendMessage({ action: "contSwitchMode", mode });
   }
-};
+}
 
 function startTimer() {
   //console.log("Sound request sent");
@@ -310,13 +293,13 @@ function startTimer() {
   let { total } = timer.remainingTime;
   const endTime = Date.parse(new Date()) + total * 1000;
 
-  if (timer.mode === 'pomodoro') timer.sessions++;
+  if (timer.mode === "pomodoro") timer.sessions++;
 
   interval = setInterval(async function () {
     timer.remainingTime = getRemainingTime(endTime);
     await updateTimerInStorage(timer);
     if (pomIsOpen) {
-      chrome.runtime.sendMessage({ action: 'updateClock' });
+      chrome.runtime.sendMessage({ action: "updateClock" });
     }
 
     total = timer.remainingTime.total;
@@ -325,22 +308,22 @@ function startTimer() {
       clearInterval(interval);
 
       switch (timer.mode) {
-        case 'pomodoro':
+        case "pomodoro":
           if (timer.sessions % timer.longBreakInterval === 0) {
-            switchMode('longBreak');
+            switchMode("longBreak");
           } else {
-            switchMode('shortBreak');
+            switchMode("shortBreak");
           }
           break;
         default:
-          switchMode('pomodoro');
+          switchMode("pomodoro");
       }
 
-      chrome.storage.local.get('timerNotify', function(data) {
+      chrome.storage.local.get("timerNotify", function (data) {
         if (data.timerNotify === 1) {
           const text =
-            timer.mode === 'pomodoro' ? 'Get back to work!' : 'Take a break!';
-            pomonotify(text);
+            timer.mode === "pomodoro" ? "Get back to work!" : "Take a break!";
+          pomonotify(text);
         }
       });
 
@@ -349,17 +332,15 @@ function startTimer() {
       startTimer();
     }
   }, 1000);
-};
+}
 
 function pomonotify(text) {
-  chrome.notifications.create(
-    {
-      type: "basic",
-      title: "Pomodoro Timer",
-      message: text,
-      iconUrl: "../img/cat.png"
-    }
-  );
+  chrome.notifications.create({
+    type: "basic",
+    title: "Pomodoro Timer",
+    message: text,
+    iconUrl: "../img/cat.png",
+  });
 }
 
 function getRemainingTime(endTime) {
@@ -375,12 +356,18 @@ function getRemainingTime(endTime) {
     minutes,
     seconds,
   };
-};
+}
 
 function stopTimer() {
   clearInterval(interval);
   updateTimerInStorage(timer);
   timerRunning = false;
-  if (pomIsOpen)
-    chrome.runtime.sendMessage({ action: 'mainButtonOff' });
-};
+  if (pomIsOpen) chrome.runtime.sendMessage({ action: "mainButtonOff" });
+}
+
+//blackList
+chrome.runtime.onMessage.addListener((message, sender) => {
+  if (message.CloseMe) {
+    chrome.tabs.remove(sender.tab.id);
+  }
+});

@@ -1,0 +1,76 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2b2a33, #2b2a33);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 95%;
+  max-width: 600px;
+  background-color: #00000000;
+  padding: 30px;
+  border-radius: 20px;
+  border: 4px solid #f9b60e;
+}
+
+.container h1 {
+  color: #f9b60e;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#websiteInput {
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 2px solid #f9b60e;
+  color: #ffffff;
+  background-color: #2b2a33;
+  resize: vertical;
+}
+
+#addBtn {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #f9b60e;
+  color: #000000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#blockedWebsitesList {
+  margin-top: 30px;
+  list-style-type: none;
+}
+
+#blockedWebsitesList li {
+  color: #f9b60e;
+  margin-bottom: 20px;
+  display: flex; /* Add flex display */
+  justify-content: space-between; /* Spread items evenly */
+}
+
+#blockedWebsitesList li button {
+  background-color: #f9b60e;
+  color: #000000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}

@@ -36,8 +36,8 @@ html {
 
 :root {
   --pomodoro: #2b2a33;
-  --shortBreak: hsl(48, 23%, 40%);
-  --longBreak: hsl(105, 16%, 40%);
+  --shortBreak: #4a4957;
+  --longBreak: #6e6c83;
 }
 
 body {
@@ -100,12 +100,12 @@ progress::-webkit-progress-value {
 }
 
 .mode-button.active {
-  border-color: #565656;
+  border-color: #f9b60e;
 }
 
 .main-button {
   cursor: pointer;
-  box-shadow: #565656;
+  box-shadow: #f9b60e;
   font-size: 22px;
   height: 55px;
   text-transform: uppercase;
@@ -226,7 +226,7 @@ input:checked + .slider:before {
 .button-bottom {
   color: #f9b60e;
   font-weight: bold;
-  border: 2px solid black;
+  border: 2px solid #f9b60e;
   cursor: pointer;
   background-color: transparent;
   padding: 10px 10px; /* Adjust padding as needed */
@@ -272,8 +272,10 @@ input:checked + .slider:before {
   color: #f9b60e;
 }
 
-.settingsMenu {
+#settingsMenu {
   color: #f9b60e;
+  font-family: sans-serif;
+  font-weight: bold;
 }
 
 #changeTimeButton {
@@ -281,5 +283,6 @@ input:checked + .slider:before {
   margin-bottom: 10px;
   color: #f9b60e;
   font-family: "Poppins", sans-serif;
+  font-weight: bold;
   background-color: #333; /* Change to the darker color you prefer */
 }

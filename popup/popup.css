@@ -32,10 +32,11 @@ body {
 }
 
 .quotePill {
-  border: 3px black solid;
+  border: 3px #f9b60e solid;
   border-radius: 20px;
   margin-left: 20px;
   margin-right: 20px;
+  color: whitesmoke
 }
 
 .dashboardText {

@@ -37,7 +37,7 @@ h1 {
 button{
   color: #f9b60e;
   font-weight: bold;
-  border: 2px solid black;
+  border: 2px solid #f9b60e;
   cursor: pointer;
   background-color: transparent;
   padding: 10px 10px; /* Adjust padding as needed */

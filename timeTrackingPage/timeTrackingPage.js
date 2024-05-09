@@ -72,7 +72,7 @@ function getBlacklist() {
       if (chrome.runtime.lastError) {
         reject(chrome.runtime.lastError);
       } else {
-        resolve(data.blacklist);
+        resolve(data.BlockedWebsites);
       }
     });
   });

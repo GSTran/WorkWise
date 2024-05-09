@@ -3,12 +3,7 @@
   "name": "WorkWise",
   "version": "1.0.0",
   "description": "Productivity Extension",
-  "permissions": [
-    "storage",
-    "tabs",
-    "offscreen",
-    "notifications"
-  ],
+  "permissions": ["storage", "tabs", "activeTab", "offscreen", "notifications"],
   "background": {
     "service_worker": "background.js"
   },
@@ -17,7 +12,13 @@
     "48": "img/Bee Logo.png",
     "128": "img/Bee Logo.png"
   },
-  "host_permissions": ["https://zenquotes.io/api/"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    }
+  ],
+  "host_permissions": ["https://zenquotes.io/api/", "<all_urls>"],
   "action": {
     "default_icon": {
       "16": "img/Bee Logo.png",

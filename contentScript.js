@@ -15,7 +15,15 @@ function checkBlockedWebsites() {
 }
 
 // Call the function initially when the content script is loaded
-checkBlockedWebsites();
+
+chrome.storage.local.get("blacklistEnabled", function (data) {
+  if (data.blacklistEnabled === 1) {
+    checkBlockedWebsites();
+  }
+});
+
+
+
 
 // Listen for changes in the blocked list and update the blocking behavior
 chrome.storage.onChanged.addListener((changes, namespace) => {

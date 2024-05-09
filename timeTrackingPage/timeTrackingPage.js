@@ -22,53 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   chrome.runtime.sendMessage({action:'getTracking'});
 
-  var saveButton = document.getElementById('saveButton');
-  var loadButton = document.getElementById('loadButton');
-  var dataButton = document.getElementById('getData');
-  var clearButton = document.getElementById('clearData');
-
-  // Clear Data 
-  clearButton.addEventListener('click', function() {
-    chrome.storage.local.clear(function() {
-      console.log('Data cleared from chrome.storage.local');
-    });
-    // Retrieve all data from local storage
-    chrome.storage.local.get(null, function(data) {
-    console.log('Local Storage Data:', data);
-   });
-  });
-  // Save data to local storage when save button is clicked
-  dataButton.addEventListener('click', function() {
-    // Retrieve all data from local storage
-    chrome.storage.local.get(null, function(data) {
-    console.log('Local Storage Data:', data);
-  });
-  chrome.storage.local.get('blacklist', function(data){
-    console.log('Blacklist:',data);
-    console.log('Blacklist:',data.blacklist);
-  }); 
-    
-  });
-
-  // Save data to local storage when save button is clicked
-  saveButton.addEventListener('click', function() {
-    var data = { message: 'Hello, world!' };
-    var blacklist = ["www.youtube.com","www.reddit.com","sjsu.instructure.com"];
-    chrome.storage.local.set({'blacklist':blacklist});
-    chrome.storage.local.set({ 'myData': data }, function() {
-      console.log('Data saved:', data);
-    });
-    
-  });
-
-  // Load data from local storage when load button is clicked
-  loadButton.addEventListener('click', function() {
-    chrome.storage.local.get('myData', function(result) {
-      var data = result.myData;
-      console.log('Data loaded:', data);
-      alert(data ? data.message : 'No data found!');
-    });
-  });
 });
 
 var button = document.getElementById('toggleTracking');

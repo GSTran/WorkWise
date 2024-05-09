@@ -89,3 +89,28 @@ function addToBlockedWebsites(website) {
     );
   });
 }
+var toggleNotifications = document.getElementById('blacklistToggle');
+chrome.storage.local.get('blacklistEnabled', function(data) {
+  if (data.blacklistEnabled)
+    toggleNotifications.checked = true;
+  else
+    toggleNotifications.checked = false;
+});
+
+
+toggleNotifications.addEventListener('click', function () {
+  console.log(toggleNotifications.checked);
+  // Check if the switch is checked
+  if (toggleNotifications.checked) {
+    console.log('Switch is ON');
+    chrome.storage.local.set({ 'blacklistEnabled': 1 }, function () {
+      console.log('Notification setting saved');
+    });
+    // Call the pomonotify function if it's defined
+  } else {
+    console.log('Switch is OFF');
+    chrome.storage.local.set({ 'blacklistEnabled': 0 }, function () {
+      console.log('Notification setting saved');
+    });
+  }
+});

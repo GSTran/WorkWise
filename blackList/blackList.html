@@ -7,6 +7,7 @@
     <title>BlackList</title>
     <link rel="stylesheet" href="./blackList.css" />
     <link rel="stylesheet" href="../navbar/navbar.css" />
+    <link rel="stylesheet" href="../pomodoro/pomodoro.css" />
   </head>
   <body>
     <header class="navbar">
@@ -51,7 +52,7 @@
             <input
               type="text"
               id="websiteInput"
-              placeholder="Enter website to block"
+              placeholder="Enter URL to block. Ex: www.youtube.com (www required)"
             />
             <button id="addBtn">Add</button>
           </div>
@@ -61,6 +62,11 @@
       <div class="bottomItem">
         <ul id="blockedWebsitesList"></ul>
       </div>
+      <span class="notification-text">Blacklist Toggle</span>
+      <label class="switch">
+        <input type="checkbox" id="blacklistToggle" />
+        <span class="slider round"></span>
+      </label>
     </div>
     <script src="blackList.js"></script>
   </body>

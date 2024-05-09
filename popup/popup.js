@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // You can do whatever you need to do here, like saving data or cleaning up resources
   });
 
-  document.getElementById("blackListBtn").addEventListener("click", () => {
-    chrome.tabs.create({ url: "blackList/blackList.html" });
-  });
+  // document.getElementById("blackListBtn").addEventListener("click", () => {
+  //   chrome.tabs.create({ url: "blackList/blackList.html" });
+  // });
 });

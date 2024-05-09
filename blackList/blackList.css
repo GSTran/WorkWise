@@ -6,12 +6,10 @@
 }
 
 body {
-  width: 100%;
+  width: 500px;
+  height: 500px;
   min-height: 100vh;
   background: linear-gradient(135deg, #2b2a33, #2b2a33);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .container {

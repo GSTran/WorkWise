@@ -115,7 +115,7 @@ chrome.runtime.onMessage.addListener(function (message) {
 
 function getBlacklist() {
   return new Promise((resolve, reject) => {
-    chrome.storage.local.get('blacklist', function(data) {
+    chrome.storage.local.get('BlockedWebsites', function(data) {
       if (chrome.runtime.lastError) {
         reject(chrome.runtime.lastError);
       } else {
@@ -140,7 +140,7 @@ async function displayTime(timeData, tracking) {
   try {
     // Wait for the storage query to complete using async/await
     blacklist = await getBlacklist();
-    console.log('Blacklist:', blacklist);
+    //console.log('Blacklist:', blacklist);
 
     // Further processing using blacklist
     console.log(timeData);

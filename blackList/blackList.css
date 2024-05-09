@@ -19,6 +19,8 @@ body {
   padding: 30px;
   border-radius: 20px;
   border: 4px solid #f9b60e;
+  margin: 0 auto; /* Center horizontally */
+  text-align: center; /* Center text content */
 }
 
 .container h1 {

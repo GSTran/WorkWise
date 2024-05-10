@@ -167,7 +167,7 @@ var firstTime = true;
 
 const timer = {
   pomodoro: 0.2,
-  shortBreak: 0.2,
+  shortBreak: 0.1,
   longBreak: 0.4,
   longBreakInterval: 2,
   sessions: 0,

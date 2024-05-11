@@ -42,21 +42,6 @@ function extractDomain(url) {
   return domain;
 }
 
-// //Function to track time spent on a website
-// function trackTimeOnWebsite(url, elapsedTime) {
-//   // Retrieve stored time for this website
-//   chrome.storage.local.get(url, function(data) {
-//     var totalTime = data[url] || 0;
-
-//     // Update the total time spent on this website
-//     var newData = {};
-//     newData[url] = totalTime + elapsedTime;
-//     chrome.storage.local.set(newData);
-
-//     sendTimeData();
-//   });
-// }
-
 function trackTimeOnWebsite(url, elapsedTime) {
   var key = "websiteData";
 
@@ -83,7 +68,6 @@ function trackTimeOnWebsite(url, elapsedTime) {
     var newData = {};
     newData[key] = websiteDataArray;
     chrome.storage.local.set(newData, function () {
-      // Optional code to execute after setting data in local storage
       // console.log("Data right after setting:");
       // console.log(websiteDataArray);
     });
@@ -228,21 +212,6 @@ chrome.runtime.onMessage.addListener(function (message) {
     switchMode(currentMode);
   }
 });
-
-// // Listener for when a window is removed (closed)
-// chrome.windows.onRemoved.addListener((windowId) => {
-//   // Retrieve information about the closed window
-//   chrome.windows.get(windowId, { populate: false }, (closedWindow) => {
-//     if (chrome.runtime.lastError) {
-//       //console.error(`Error retrieving window with ID ${windowId}:`, chrome.runtime.lastError);
-//       return;
-//     }
-
-//     if (closedWindow && closedWindow.type === 'popup') {
-//       pomisOpen = false;
-//     }
-//   });
-// });
 
 function updateTimerInStorage(newTimer) {
   chrome.storage.local.set({ timer: newTimer }, () => {

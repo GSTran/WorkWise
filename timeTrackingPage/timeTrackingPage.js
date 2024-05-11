@@ -58,14 +58,6 @@ chrome.runtime.onMessage.addListener(function (message) {
   }
 });
 
-// Listen for messages from background script
-// chrome.runtime.onMessage.addListener(function(message) {
-//   console.log("upDateTime message received" + message.tracking);
-//   if (message.action === 'updateTime') {
-//     displayTime(message.timeData, message.tracking);
-//   }
-// });
-
 function getBlacklist() {
   return new Promise((resolve, reject) => {
     chrome.storage.local.get('BlockedWebsites', function(data) {
@@ -139,10 +131,6 @@ async function displayTime(timeData, tracking) {
         listItem.appendChild(progressBar);
     }
     websiteList.appendChild(listItem);
-
-    // Push URL and time to respective arrays
-    // urls.push(website.url);
-    // times.push(website.time);
   });
   //Total Time element
   var listItem = document.createElement('li');

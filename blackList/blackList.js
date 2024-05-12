@@ -3,13 +3,6 @@ var WebsiteHostName;
 
 var toggleBlock = document.getElementById("toggleBlock");
 
-// chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-//   WebsiteUrl = tabs[0].url;
-//   WebsiteHostName = new URL(tabs[0].url).hostname;
-
-//   document.getElementById("url").innerText = WebsiteHostName;
-// });
-
 function ShowError(text) {
   var div = document.createElement("div");
   div.setAttribute("id", "ERRORcontainer");

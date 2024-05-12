@@ -36,6 +36,7 @@ var button = document.getElementById('toggleTracking');
 document.getElementById('toggleTracking').addEventListener('click', function() {
   var isTracking = (button.textContent === 'Start Tracking');
   
+  // Sets tracking button text and tracks time
   if (isTracking) {
     sendMessageToBackground({ action: 'startTracking' });
     button.textContent = 'Stop Tracking';

@@ -99,7 +99,6 @@ toggleNotifications.addEventListener('click', function () {
     chrome.storage.local.set({ 'blacklistEnabled': 1 }, function () {
       console.log('Notification setting saved');
     });
-    // Call the pomonotify function if it's defined
   } else {
     console.log('Switch is OFF');
     chrome.storage.local.set({ 'blacklistEnabled': 0 }, function () {

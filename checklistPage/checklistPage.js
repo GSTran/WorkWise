@@ -6,62 +6,63 @@ const completedTaskCounter = document.getElementById("completed-task-counter");
 const completionMessage = document.getElementById("completion-message");
 const streakCounter = document.getElementById("streak-counter");
 
-let totalTasks = 0;
-let completedTasks = 0;
-let streak = 0;
+let totalTasks = 0; // Initialize total tasks counter
+let completedTasks = 0; // Initialize completed tasks counter
+let streak = 0; // Initialize streak counter
 
 function addTask() {
   if (inputBox.value === "") {
-    alert("Write something!");
+    alert("Write something!"); // Alert if user input is empty
   } else {
-    let li = document.createElement("li");
-    li.innerHTML = inputBox.value;
-    listContainer.appendChild(li);
-    let span = document.createElement("span");
-    span.innerHTML = "\u00d7";
-    li.appendChild(span);
+    let li = document.createElement("li"); // Create a new list item
+    li.innerHTML = inputBox.value; // Set its content to the input value
+    listContainer.appendChild(li); // Append it to the list container
+    let span = document.createElement("span"); // Create a span element
+    span.innerHTML = "\u00d7"; // Set its content to '×' for the remove button
+    li.appendChild(span); // Append it to the list item
 
-    totalTasks++;
-    updateTaskCounter();
+    totalTasks++; // Increment total tasks counter
+    updateTaskCounter(); // Update task counter display
     // Check completion status after adding a task
     recheckCompletionStatus();
     // Update past seven days data
   }
-  inputBox.value = "";
-  saveData();
+  inputBox.value = ""; // Clear the input box after the task is added
+  saveData(); // Save the data to storage
 }
 
-addTaskBtn.addEventListener("click", addTask);
+addTaskBtn.addEventListener("click", addTask); // Add event listener for add task button
 
 listContainer.addEventListener(
   "click",
   function (e) {
     if (e.target.tagName === "LI") {
-      e.target.classList.toggle("checked");
+      e.target.classList.toggle("checked"); // Toggle the 'checked' class for list item
       if (e.target.classList.contains("checked")) {
-        completedTasks++;
+        completedTasks++; // Increment completed tasks if checked
       } else {
-        completedTasks--;
+        completedTasks--; // Decrement completed tasks if unchecked
       }
-      saveData();
-      updateCompletedTaskCounter();
+      saveData(); // Save data to storage
+      updateCompletedTaskCounter(); // Update completed task counter display
       recheckCompletionStatus(); // Check completion status after modifying a task
     } else if (e.target.tagName === "SPAN") {
-      e.target.parentElement.remove();
+      e.target.parentElement.remove(); // Remove the parent list item if click remove
       totalTasks--;
       if (e.target.parentElement.classList.contains("checked")) {
         completedTasks--;
       }
-      updateTaskCounter();
-      updateCompletedTaskCounter();
+      updateTaskCounter(); // Update task counter display
+      updateCompletedTaskCounter(); // Update completed task counter display
       recheckCompletionStatus(); // Check completion status after modifying a task
 
-      saveData();
+      saveData(); // Save data to storage
     }
   },
   false
 );
 
+// Function to save data to Chrome storage
 function saveData() {
   chrome.storage.sync.set({
     data: listContainer.innerHTML,
@@ -77,8 +78,9 @@ function showTask() {
   });
 }
 
-showTask();
+showTask(); // Show tasks on page load
 
+// Function to update total task counter display
 function updateTaskCounter() {
   if (totalTasks < 0) {
     totalTasks = 0;
@@ -87,6 +89,7 @@ function updateTaskCounter() {
   chrome.storage.sync.set({ totalTasks: totalTasks });
 }
 
+// Function to update completed task counter display
 function updateCompletedTaskCounter() {
   if (completedTasks < 0) {
     completedTasks = 0;
@@ -95,6 +98,7 @@ function updateCompletedTaskCounter() {
   chrome.storage.sync.set({ completedTasks: completedTasks });
 }
 
+// Function to recheck completion status and display message
 function recheckCompletionStatus() {
   if (completedTasks === totalTasks && totalTasks > 0) {
     completionMessage.textContent = "Hooray! All tasks completed!";
@@ -103,6 +107,7 @@ function recheckCompletionStatus() {
   }
 }
 
+// Function to check completion for streak
 function checkCompletionforStreak() {
   if (completedTasks === totalTasks && totalTasks > 0) {
     streak++; //if done with all increment streak;
@@ -113,6 +118,7 @@ function checkCompletionforStreak() {
   }
 }
 
+// Function to load task counts from storage
 function loadTaskCounts() {
   chrome.storage.sync.get(["totalTasks", "completedTasks"], function (result) {
     const savedTotalTasks = result.totalTasks;
@@ -121,22 +127,24 @@ function loadTaskCounts() {
     totalTasks =
       savedTotalTasks !== null && savedTotalTasks !== undefined
         ? parseInt(savedTotalTasks)
-        : 0;
+        : 0; // Load total tasks from storage or set to 0
     completedTasks =
       savedCompletedTasks !== null && savedCompletedTasks !== undefined
         ? parseInt(savedCompletedTasks)
-        : 0;
+        : 0; // Load completed tasks from storage or set to 0
 
     updateTaskCounter();
     updateCompletedTaskCounter();
   });
 }
 
+// Function to update streak counter display
 function updateStreakCounter() {
   streakCounter.textContent = streak; // I can reset streak here when testing
   chrome.storage.sync.set({ streak: streak });
 }
 
+// Function to load streak count from storage
 function loadStreakCount() {
   chrome.storage.sync.get("streak", function (result) {
     streak =
@@ -151,8 +159,9 @@ loadTaskCounts();
 loadStreakCount();
 
 //----------------------------------------------------------------------------------------------
-let pastSevenDaysData = [];
+let pastSevenDaysData = []; // Array to store past seven days data
 
+// Function to initialize past seven days data
 function initializePastSevenDaysData() {
   // Initialize pastSevenDaysData array with empty objects for the past 7 days
   for (let i = 0; i < 7; i++) {
@@ -164,6 +173,7 @@ function initializePastSevenDaysData() {
   }
 }
 
+// Function to update past seven days data
 async function updatePastSevenDaysData() {
   // Remove the first element (oldest data)
   pastSevenDaysData.shift();
@@ -187,6 +197,7 @@ async function updatePastSevenDaysData() {
   });
 }
 
+// Function to get the Date()
 function getDateNDaysAgo(n) {
   const today = new Date();
   const pastDate = new Date(today);
@@ -194,6 +205,7 @@ function getDateNDaysAgo(n) {
   return pastDate.toDateString();
 }
 
+// Function to calculate past 7 days stats
 function calculatePastSevenDaysStats() {
   let pastSevenDaysTotalTasks = 0;
   let pastSevenDaysCompletedTasks = 0;
@@ -207,6 +219,7 @@ function calculatePastSevenDaysStats() {
   return { pastSevenDaysTotalTasks, pastSevenDaysCompletedTasks };
 }
 
+// Function to display past 7 days stats on UI
 function displayPastSevenDaysStats() {
   chrome.storage.sync.get(
     [
@@ -280,6 +293,7 @@ function checkAndResetAtMidnight() {
   setTimeout(checkAndResetAtMidnight, 1000);
 }
 
+// Function to reset once hit midnight (this one is for back to back day check)
 function reset() {
   updatePastSevenDaysData();
   // Reset actions for Test 1
@@ -293,6 +307,7 @@ function reset() {
   displayPastSevenDaysStats();
 }
 
+// Function to reset once hit midnight
 async function resetAtMidnight() {
   await updatePastSevenDaysData();
   // Reset actions for Test 1

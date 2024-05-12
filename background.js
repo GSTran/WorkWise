@@ -256,6 +256,7 @@ async function switchMode(mode) {
   }
 }
 
+// Starts pomodoro timer
 function startTimer() {
   //console.log("Sound request sent");
   timerRunning = true;
@@ -288,6 +289,8 @@ function startTimer() {
           switchMode("pomodoro");
       }
 
+      // Output a desktop notification whenever the timers switch if 
+      // timerNotify is toggled to on
       chrome.storage.local.get("timerNotify", function (data) {
         if (data.timerNotify === 1) {
           const text =

@@ -116,6 +116,7 @@ settingsButton.addEventListener('click', () => {
   settingsMenu.classList.toggle("hidden");
 })
 
+// Functionality for the notification toggle switch
 var toggleNotifications = document.getElementById('pomoNotifyToggle');
 toggleNotifications.addEventListener('click', function () {
   console.log(toggleNotifications.checked);
@@ -136,6 +137,7 @@ toggleNotifications.addEventListener('click', function () {
 });
 
 
+// Outputs a notification for when notifications are turned on
 function pomonotify() {
   chrome.notifications.create(
     {

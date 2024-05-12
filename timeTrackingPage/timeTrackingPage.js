@@ -10,19 +10,26 @@ function requestTimeFromBackground() {
 
 var isTracking;
 
-// Display time spent on each website
+//when the time tracking page is loaded
 document.addEventListener('DOMContentLoaded', function() {
+  //update the time tracking page with the current websites being tracked
   requestTimeFromBackground();
+
+  //notify the background that the time tracking page is open
   chrome.runtime.sendMessage({action:'timeTrackOpen'});
+
+  //notify the background that the time tracking page is closed
   document.addEventListener("visibilitychange", function() {
     if (document.visibilityState === 'hidden') {
       chrome.runtime.sendMessage({action:'timeTrackClose'});
     }
   });
 
+  //gets the tracking status to correctly set the tracking button
   chrome.runtime.sendMessage({action:'getTracking'});
 
 });
+
 
 var button = document.getElementById('toggleTracking');
 // Handle button click to start or stop tracking
@@ -43,9 +50,11 @@ document.getElementById('toggleTracking').addEventListener('click', function() {
   }
 });
 
+//listen for messages from background
 chrome.runtime.onMessage.addListener(function (message) {
   var action = message.action;
 
+  //sets the tracking button based on if website activity is being tracked or not
   if(action === 'updateTrackingButton')
   {
     const tracking = message.tracking;
@@ -53,11 +62,13 @@ chrome.runtime.onMessage.addListener(function (message) {
       button.textContent = 'Stop Tracking';
     }
   }
+  //updates the textbox on the time tracking page to include the websites that have been tracked
   else if (action==='updateTime'){
     displayTime(message.timeData, message.tracking);
   }
 });
 
+//gets the blacklisted websites from the storage adn returns them to the callling function
 function getBlacklist() {
   return new Promise((resolve, reject) => {
     chrome.storage.local.get('BlockedWebsites', function(data) {
@@ -83,17 +94,17 @@ async function displayTime(timeData, tracking) {
   var blacklist;
 
   try {
-    // Wait for the storage query to complete using async/await
+    // wait for the blacklisted websites to be loaded
     blacklist = await getBlacklist();
-    //console.log('Blacklist:', blacklist);
 
-    // Further processing using blacklist
-    console.log(timeData);
-    console.log(timeData.websiteData);
+    //Debugging statements
+  //   console.log(timeData);
+  //   console.log(timeData.websiteData);
   } catch (error) {
     console.error('Error retrieving blacklist:', error);
   }
 
+  //returns if there is no website data to be displayed
   var websiteData = timeData.websiteData;
   if (websiteData ==null){
     return;
@@ -102,6 +113,7 @@ async function displayTime(timeData, tracking) {
   // Calculate total time spent on all websites
   websiteData.forEach(function(website) {
     totalTime += website.time;
+    //calculate the total time spent on blacklisted websites
     if (blacklist){
       blacklist.forEach(function(blackListedWebsite){
         if (blackListedWebsite == website.url){
@@ -114,24 +126,30 @@ async function displayTime(timeData, tracking) {
 
   // Iterate through each website in timeData and display it
   websiteData.forEach(function(website) {
+    //creates a list item for each website that will contain all of the related data
     var listItem = document.createElement('li');
+
+    //adds the time spent on that website to the list element
     listItem.textContent = website.url + ': ' + formatTime(website.time);
     if (!tracking) {
         listItem.appendChild(document.createElement('br'));
 
+        //adds the proportion of the total time spent on that website to the list element
         var portionText = document.createElement('span');
         var proportion = (website.time / totalTime) * 100;
         portionText.textContent += "Portion: " + proportion.toFixed(2) + "%";
         listItem.appendChild(portionText);
 
-        // Creating a progress bar element
+        // adds a progress bar for a visual representation of the proportion
         var progressBar = document.createElement('progress');
         progressBar.value = proportion;
         progressBar.max = 100;
         listItem.appendChild(progressBar);
     }
+    //adds the current list item to the website list
     websiteList.appendChild(listItem);
   });
+
   //Total Time element
   var listItem = document.createElement('li');
   listItem.textContent = 'Total Time: ' + formatTime(totalTime);
@@ -142,6 +160,8 @@ async function displayTime(timeData, tracking) {
   var offTaskItem = document.createElement('span');
   var propOffTask = timeOffTask/totalTime*100;
   offTaskItem.textContent = 'Time off Task: ' + propOffTask.toFixed(2) + "%";
+  
+  //add a progress bar for the time spent off task
   if(!tracking){
     var progressBar = document.createElement('progress');
     progressBar.value = propOffTask;
@@ -151,7 +171,7 @@ async function displayTime(timeData, tracking) {
   }
   websiteList.appendChild(listItem);
 
-  //Clear when tracking stops
+  //Clear the website data in the storage when tracking stops
   if(!tracking){
     chrome.storage.local.set({ 'websiteData': null }, function() {
       console.log('Data has been cleared.');
